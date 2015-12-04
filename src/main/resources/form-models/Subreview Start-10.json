@@ -3,12 +3,92 @@
   "name": "Start Sub Review",
   "description": null,
   "editorJson": {
-    "tabs": [],
+    "tabs": [
+      {
+        "id": "tab_review",
+        "title": "Review Details",
+        "visibilityCondition": null
+      },
+      {
+        "id": "tab_files",
+        "title": "Document",
+        "visibilityCondition": null
+      }
+    ],
     "fields": [
       {
         "fieldType": "ContainerRepresentation",
+        "id": "1444738502411",
+        "name": "",
+        "type": "container",
+        "value": null,
+        "required": false,
+        "readOnly": true,
+        "overrideId": false,
+        "colspan": 1,
+        "placeholder": null,
+        "optionType": null,
+        "hasEmptyValue": null,
+        "options": null,
+        "restUrl": null,
+        "restIdProperty": null,
+        "restLabelProperty": null,
+        "tab": "tab_files",
+        "layout": null,
+        "sizeX": 2,
+        "sizeY": 1,
+        "row": -1,
+        "col": -1,
+        "visibilityCondition": null,
+        "numberOfColumns": 2,
+        "fields": {
+          "1": [
+            {
+              "fieldType": "AttachFileFieldRepresentation",
+              "id": "reviewFile",
+              "name": "Contract File",
+              "type": "upload",
+              "value": [],
+              "required": true,
+              "readOnly": true,
+              "overrideId": false,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab2",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 2,
+                "fileSource": {
+                  "serviceId": "all-file-sources",
+                  "name": "All file sources"
+                }
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null,
+              "metaDataColumnDefinitions": null
+            }
+          ],
+          "2": []
+        }
+      },
+      {
+        "fieldType": "ContainerRepresentation",
         "id": "1448632361217",
-        "name": "Label",
+        "name": "",
         "type": "container",
         "value": null,
         "required": false,
@@ -22,7 +102,7 @@
         "restUrl": null,
         "restIdProperty": null,
         "restLabelProperty": null,
-        "tab": null,
+        "tab": "tab_review",
         "layout": null,
         "sizeX": 2,
         "sizeY": 1,
@@ -49,7 +129,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": null,
+              "tab": "tab_review",
               "params": {
                 "existingColspan": "1",
                 "maxColspan": 2
@@ -84,7 +164,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": null,
+              "tab": "tab_review",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 1
