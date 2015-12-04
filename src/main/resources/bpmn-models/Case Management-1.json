@@ -281,8 +281,15 @@
             "usertasksendemail": true,
             "usertaskassignment": {
               "assignment": {
-                "type": "static",
-                "assignee": "$INITIATOR"
+                "type": "idm",
+                "idm": {
+                  "assigneeField": {
+                    "id": "caseOwner",
+                    "name": "Case Owner"
+                  },
+                  "type": "user"
+                },
+                "initiatorCanCompleteTask": true
               }
             },
             "formkeydefinition": "",
@@ -2416,11 +2423,8 @@
     {
       "resourceId": "setAttorneyInitial",
       "properties": {
-        "scriptformat": "groovy",
-        "scripttext": "execution.setVariable('caseOwner', 'julie.richards@acme.com');",
-        "executionvariables": "",
         "overrideid": "setAttorneyInitial",
-        "name": "setCaseOwner",
+        "name": "Set Attorney",
         "documentation": "",
         "asynchronousdefinition": false,
         "exclusivedefinition": true,
@@ -2432,10 +2436,14 @@
         "multiinstance_collection": "",
         "multiinstance_variable": "",
         "multiinstance_condition": "",
-        "isforcompensation": "false"
+        "isforcompensation": "false",
+        "decisiontaskdecisiontablereference": {
+          "id": 4,
+          "name": "Select Attorney Embedded"
+        }
       },
       "stencil": {
-        "id": "ScriptTask"
+        "id": "DecisionTask"
       },
       "childShapes": [],
       "outgoing": [

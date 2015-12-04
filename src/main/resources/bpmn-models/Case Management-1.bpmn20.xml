@@ -27,13 +27,15 @@
     <subProcess id="legalSubprocess" name="Legal Review Subprocess">
       <startEvent id="legalSubProcessStart"/>
       <parallelGateway id="legalSubProcessSplit"/>
-      <userTask id="legalReviewTask" name="Legal Review" activiti:assignee="$INITIATOR" activiti:formKey="8">
+      <userTask id="legalReviewTask" name="Legal Review" activiti:assignee="${taskAssignmentBean.assignTaskToAssignee('caseOwner', execution)}" activiti:formKey="8">
         <extensionElements>
           <activiti:formProperty id="outcome" type="string"/>
           <activiti:formProperty id="paralegal" type="string"/>
           <modeler:allow-send-email>true</modeler:allow-send-email>
           <modeler:form-reference-id>8</modeler:form-reference-id>
           <modeler:form-reference-name>Legal Review</modeler:form-reference-name>
+          <modeler:activiti-idm-initiator>true</modeler:activiti-idm-initiator>
+          <modeler:activiti-idm-assignee-field>caseOwner</modeler:activiti-idm-assignee-field>
           <modeler:initiator-can-complete>true</modeler:initiator-can-complete>
         </extensionElements>
       </userTask>
@@ -170,7 +172,6 @@
     </scriptTask>
     <sequenceFlow id="flow0b" sourceRef="setCaseStatusNew" targetRef="newCaseTask"/>
     <sequenceFlow id="flow0a" sourceRef="startevent" targetRef="setCaseStatusNew"/>
-    <!--
     <serviceTask id="setAttorneyInitial" name="Set Attorney" activiti:delegateExpression="${activiti_executeDecisionDelegate}">
       <extensionElements>
         <activiti:field name="decisionTableReferenceKey">
@@ -179,10 +180,11 @@
         <modeler:decisiontable-reference modeler:decisiontablereferenceid="4" modeler:decisiontablereferencename="Select Attorney Embedded"/>
       </extensionElements>
     </serviceTask>
-    -->
+    <!--
     <scriptTask id="setAttorneyInitial" name="setCaseOwner" scriptFormat="groovy" activiti:autoStoreVariables="false">
       execution.setVariable('caseOwner', 'julie.richards@acme.com');
     </scriptTask>
+    -->
     <sequenceFlow id="flow2" sourceRef="setAttorneyInitial" targetRef="setOwner"/>
     <scriptTask id="setOwner" name="setCaseOwner" scriptFormat="groovy" activiti:autoStoreVariables="false">
         // Do nothing
