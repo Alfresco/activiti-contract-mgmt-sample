@@ -5,12 +5,12 @@
   "editorJson": {
     "tabs": [
       {
-        "id": "tab1",
+        "id": "tab_details",
         "title": "Details",
         "visibilityCondition": null
       },
       {
-        "id": "tab2",
+        "id": "tab_files",
         "title": "Document",
         "visibilityCondition": null
       }
@@ -33,7 +33,7 @@
         "restUrl": null,
         "restIdProperty": null,
         "restLabelProperty": null,
-        "tab": "tab2",
+        "tab": "tab_files",
         "layout": null,
         "sizeX": 2,
         "sizeY": 1,
@@ -102,7 +102,7 @@
         "restUrl": null,
         "restIdProperty": null,
         "restLabelProperty": null,
-        "tab": "tab1",
+        "tab": "tab_details",
         "layout": null,
         "sizeX": 2,
         "sizeY": 1,
@@ -129,7 +129,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -162,7 +162,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -195,7 +195,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -253,7 +253,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 1
@@ -289,7 +289,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 1
@@ -322,7 +322,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 1
@@ -355,7 +355,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 1
@@ -391,7 +391,7 @@
         "restUrl": null,
         "restIdProperty": null,
         "restLabelProperty": null,
-        "tab": "tab1",
+        "tab": "tab_details",
         "layout": null,
         "sizeX": 2,
         "sizeY": 1,
@@ -418,7 +418,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -474,7 +474,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -511,7 +511,7 @@
         "restUrl": null,
         "restIdProperty": null,
         "restLabelProperty": null,
-        "tab": "tab1",
+        "tab": "tab_details",
         "layout": null,
         "sizeX": 2,
         "sizeY": 1,
@@ -538,7 +538,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -571,7 +571,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -606,7 +606,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -639,7 +639,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
@@ -675,7 +675,7 @@
         "restUrl": null,
         "restIdProperty": null,
         "restLabelProperty": null,
-        "tab": "tab1",
+        "tab": "tab_details",
         "layout": null,
         "sizeX": 2,
         "sizeY": 1,
@@ -702,7 +702,7 @@
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": "tab1",
+              "tab": "tab_details",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 2
