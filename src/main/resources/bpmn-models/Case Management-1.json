@@ -1097,6 +1097,11 @@
                   "sourceExpression": null
                 },
                 {
+                  "source": "originalFile",
+                  "target": "reviewFile",
+                  "sourceExpression": null
+                },
+                {
                   "source": null,
                   "target": "reviewName",
                   "sourceExpression": "Paralegal Review"
@@ -1114,7 +1119,13 @@
               ]
             },
             "callactivityoutparameters": {
-              "outParameters": []
+              "outParameters": [
+                {
+                  "source": "reviewFile",
+                  "target": "originalFile",
+                  "sourceExpression": null
+                }
+              ]
             },
             "multiinstance_type": "None",
             "multiinstance_cardinality": "",
@@ -1805,6 +1816,11 @@
               "sourceExpression": null
             },
             {
+              "source": "originalFile",
+              "target": "reviewFile",
+              "sourceExpression": null
+            },
+            {
               "source": null,
               "target": "reviewName",
               "sourceExpression": "External Review"
@@ -1827,7 +1843,13 @@
           ]
         },
         "callactivityoutparameters": {
-          "outParameters": []
+          "outParameters": [
+            {
+              "source": "reviewFile",
+              "target": "originalFile",
+              "sourceExpression": null
+            }
+          ]
         },
         "multiinstance_type": "None",
         "multiinstance_cardinality": "",
@@ -1877,6 +1899,11 @@
               "sourceExpression": null
             },
             {
+              "source": "originalFile",
+              "target": "reviewFile",
+              "sourceExpression": null
+            },
+            {
               "source": null,
               "target": "reviewName",
               "sourceExpression": "Deviation"
@@ -1898,6 +1925,11 @@
             {
               "source": "outcome",
               "target": "deviationOutcome",
+              "sourceExpression": null
+            },
+            {
+              "source": "reviewFile",
+              "target": "originalFile",
               "sourceExpression": null
             }
           ]
@@ -2074,6 +2106,11 @@
               "sourceExpression": null
             },
             {
+              "source": "originalFile",
+              "target": "reviewFile",
+              "sourceExpression": null
+            },
+            {
               "source": null,
               "target": "reviewName",
               "sourceExpression": "Upload Signed Copy"
@@ -2100,6 +2137,11 @@
             {
               "source": "approvalCount",
               "target": "signCount",
+              "sourceExpression": null
+            },
+            {
+              "source": "reviewFile",
+              "target": "originalFile",
               "sourceExpression": null
             }
           ]

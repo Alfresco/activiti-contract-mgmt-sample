@@ -87,9 +87,11 @@
       <callActivity id="paralegalReview" name="Paralegal Review" calledElement="caseMgmtReview">
         <extensionElements>
           <activiti:in source="initiator" target="initiator"/>
+          <activiti:in source="originalFile" target="reviewFile"/>
           <activiti:in sourceExpression="Paralegal Review" target="reviewName"/>
           <activiti:in sourceExpression="paralegalReview" target="reviewKey"/>
           <activiti:in sourceExpression="${true}" target="setCreatorWritable"/>
+          <activiti:out source="reviewFile" target="originalFile"/>
         </extensionElements>
       </callActivity>
       <parallelGateway id="paralegalGW"/>
@@ -135,19 +137,23 @@
     <callActivity id="externalReview" name="External Review" calledElement="caseMgmtReview">
       <extensionElements>
         <activiti:in source="initiator" target="initiator"/>
+        <activiti:in source="originalFile" target="reviewFile"/>
         <activiti:in sourceExpression="External Review" target="reviewName"/>
         <activiti:in sourceExpression="externalReview" target="reviewKey"/>
         <activiti:in sourceExpression="Negotiate" target="reviewFolderPath"/>
         <activiti:in sourceExpression="${true}" target="external"/>
+        <activiti:out source="reviewFile" target="originalFile"/>
       </extensionElements>
     </callActivity>
     <callActivity id="deviate" name="Request Deviation" calledElement="caseMgmtReview">
       <extensionElements>
         <activiti:in source="initiator" target="initiator"/>
+        <activiti:in source="originalFile" target="reviewFile"/>
         <activiti:in sourceExpression="Deviation" target="reviewName"/>
         <activiti:in sourceExpression="internalReview" target="reviewKey"/>
         <activiti:in sourceExpression="${true}" target="setCaseFolderPermissions"/>
         <activiti:out source="outcome" target="deviationOutcome"/>
+        <activiti:out source="reviewFile" target="originalFile"/>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow13" sourceRef="deviate" targetRef="deviateGw"/>
@@ -156,11 +162,13 @@
     <callActivity id="sign" name="Upload Signed Copy" calledElement="caseMgmtReview">
       <extensionElements>
         <activiti:in source="initiator" target="initiator"/>
+        <activiti:in source="originalFile" target="reviewFile"/>
         <activiti:in sourceExpression="Upload Signed Copy" target="reviewName"/>
         <activiti:in sourceExpression="uploadSignedCopy" target="reviewKey"/>
         <activiti:in sourceExpression="${true}" target="skipFinishTask"/>
         <activiti:out source="outcome" target="signOutcome"/>
         <activiti:out source="approvalCount" target="signCount"/>
+        <activiti:out source="reviewFile" target="originalFile"/>
       </extensionElements>
     </callActivity>
     <exclusiveGateway id="signGw" default="signFlow1"/>
