@@ -46,7 +46,7 @@
             {
               "fieldType": "AttachFileFieldRepresentation",
               "id": "originalFile",
-              "name": "Label",
+              "name": "Contract File",
               "type": "upload",
               "value": [],
               "required": true,
