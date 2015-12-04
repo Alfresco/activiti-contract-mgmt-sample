@@ -45,11 +45,11 @@
           "1": [
             {
               "fieldType": "AttachFileFieldRepresentation",
-              "id": "label",
+              "id": "originalFile",
               "name": "Label",
               "type": "upload",
               "value": [],
-              "required": false,
+              "required": true,
               "readOnly": false,
               "overrideId": false,
               "colspan": 1,
