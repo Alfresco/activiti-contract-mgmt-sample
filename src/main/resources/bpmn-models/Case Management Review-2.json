@@ -315,7 +315,7 @@
                 "type": "idm",
                 "idm": {
                   "assigneeField": {
-                    "id": "selectreviewer",
+                    "id": "reviewer",
                     "name": "Select Reviewer"
                   },
                   "type": "user"

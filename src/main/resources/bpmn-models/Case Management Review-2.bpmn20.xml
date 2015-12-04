@@ -26,7 +26,7 @@
     <subProcess id="approvalSubprocess" name="Approval Subprocess">
       <startEvent id="approvalSubprocessStart"/>
       <parallelGateway id="approvalSubprocessParallelGw1"/>
-      <userTask id="approvalTask" name="${reviewName}" activiti:assignee="${taskAssignmentBean.assignTaskToAssignee('selectreviewer', execution)}" activiti:formKey="9">
+      <userTask id="approvalTask" name="${reviewName}" activiti:assignee="${taskAssignmentBean.assignTaskToAssignee('reviewer', execution)}" activiti:formKey="9">
         <extensionElements>
           <activiti:taskListener event="create" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
             <activiti:field name="script">
@@ -73,7 +73,7 @@
           <modeler:form-reference-id>9</modeler:form-reference-id>
           <modeler:form-reference-name>Sub Review</modeler:form-reference-name>
           <modeler:activiti-idm-initiator>true</modeler:activiti-idm-initiator>
-          <modeler:activiti-idm-assignee-field>selectreviewer</modeler:activiti-idm-assignee-field>
+          <modeler:activiti-idm-assignee-field>reviewer</modeler:activiti-idm-assignee-field>
           <modeler:assignee-field-info-name>Select Reviewer</modeler:assignee-field-info-name>
           <modeler:initiator-can-complete>true</modeler:initiator-can-complete>
         </extensionElements>

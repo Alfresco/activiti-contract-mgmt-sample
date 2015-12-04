@@ -3,8 +3,443 @@
   "name": "Update Contract Form",
   "description": "",
   "editorJson": {
-    "tabs": [],
-    "fields": [],
+    "tabs": [
+      {
+        "id": "tab_details",
+        "title": "Details",
+        "visibilityCondition": null
+      },
+      {
+        "id": "tab_files",
+        "title": "Document",
+        "visibilityCondition": null
+      }
+    ],
+    "fields": [
+      {
+        "fieldType": "ContainerRepresentation",
+        "id": "1444738502411",
+        "name": "Label",
+        "type": "container",
+        "value": null,
+        "required": false,
+        "readOnly": false,
+        "overrideId": false,
+        "colspan": 1,
+        "placeholder": null,
+        "optionType": null,
+        "hasEmptyValue": null,
+        "options": null,
+        "restUrl": null,
+        "restIdProperty": null,
+        "restLabelProperty": null,
+        "tab": "tab_files",
+        "layout": null,
+        "sizeX": 2,
+        "sizeY": 1,
+        "row": -1,
+        "col": -1,
+        "visibilityCondition": null,
+        "numberOfColumns": 2,
+        "fields": {
+          "1": [
+            {
+              "fieldType": "AttachFileFieldRepresentation",
+              "id": "originalFile",
+              "name": "Contract File",
+              "type": "upload",
+              "value": [],
+              "required": true,
+              "readOnly": true,
+              "overrideId": false,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_files",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 2,
+                "fileSource": {
+                  "serviceId": "all-file-sources",
+                  "name": "All file sources"
+                }
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null,
+              "metaDataColumnDefinitions": null
+            }
+          ],
+          "2": []
+        }
+      },
+      {
+        "fieldType": "ContainerRepresentation",
+        "id": "group_general",
+        "name": "General",
+        "type": "group",
+        "value": null,
+        "required": false,
+        "readOnly": true,
+        "overrideId": true,
+        "colspan": 1,
+        "placeholder": null,
+        "optionType": null,
+        "hasEmptyValue": null,
+        "options": null,
+        "restUrl": null,
+        "restIdProperty": null,
+        "restLabelProperty": null,
+        "tab": "tab_details",
+        "layout": null,
+        "sizeX": 2,
+        "sizeY": 1,
+        "row": -1,
+        "col": -1,
+        "visibilityCondition": null,
+        "numberOfColumns": 2,
+        "fields": {
+          "1": [
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "contractName",
+              "name": "Contract Name",
+              "type": "text",
+              "value": null,
+              "required": true,
+              "readOnly": true,
+              "overrideId": true,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_details",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 2
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            },
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "caseId",
+              "name": "Case ID",
+              "type": "text",
+              "value": null,
+              "required": false,
+              "readOnly": true,
+              "overrideId": true,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_details",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 2
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            },
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "customerName",
+              "name": "Customer Name",
+              "type": "text",
+              "value": null,
+              "required": false,
+              "readOnly": true,
+              "overrideId": true,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_details",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 2
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            },
+            {
+              "fieldType": "RestFieldRepresentation",
+              "id": "location",
+              "name": "Office",
+              "type": "dropdown",
+              "value": "Please choose one...",
+              "required": true,
+              "readOnly": false,
+              "overrideId": true,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": true,
+              "options": [
+                {
+                  "id": "empty",
+                  "name": "Please choose one..."
+                },
+                {
+                  "id": "London",
+                  "name": "London"
+                },
+                {
+                  "id": "Madrid",
+                  "name": "Madrid"
+                },
+                {
+                  "id": "New York",
+                  "name": "New York"
+                },
+                {
+                  "id": "Paris",
+                  "name": "Paris"
+                },
+                {
+                  "id": "Tokyo",
+                  "name": "Tokyo"
+                }
+              ],
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_details",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 1
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null,
+              "endpoint": null
+            }
+          ],
+          "2": [
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "description",
+              "name": "Description",
+              "type": "text",
+              "value": "",
+              "required": false,
+              "readOnly": true,
+              "overrideId": true,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_details",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 1
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            },
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "owner",
+              "name": "Owner",
+              "type": "people",
+              "value": null,
+              "required": false,
+              "readOnly": true,
+              "overrideId": true,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_details",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 1
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            },
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "contractType",
+              "name": "Contract Type",
+              "type": "text",
+              "value": null,
+              "required": false,
+              "readOnly": true,
+              "overrideId": true,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_details",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 1
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            }
+          ]
+        }
+      },
+      {
+        "fieldType": "ContainerRepresentation",
+        "id": "group_case_details",
+        "name": "Case Details",
+        "type": "group",
+        "value": null,
+        "required": false,
+        "readOnly": false,
+        "overrideId": true,
+        "colspan": 1,
+        "placeholder": null,
+        "optionType": null,
+        "hasEmptyValue": null,
+        "options": null,
+        "restUrl": null,
+        "restIdProperty": null,
+        "restLabelProperty": null,
+        "tab": "tab_details",
+        "layout": null,
+        "sizeX": 2,
+        "sizeY": 1,
+        "row": -1,
+        "col": -1,
+        "visibilityCondition": null,
+        "numberOfColumns": 2,
+        "fields": {
+          "1": [
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "amount",
+              "name": "Price of Job",
+              "type": "text",
+              "value": null,
+              "required": true,
+              "readOnly": false,
+              "overrideId": true,
+              "colspan": 1,
+              "placeholder": null,
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_details",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 2
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 1,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            }
+          ],
+          "2": [
+          ]
+        }
+      }
+    ],
     "outcomes": [
       {
         "id": "update",

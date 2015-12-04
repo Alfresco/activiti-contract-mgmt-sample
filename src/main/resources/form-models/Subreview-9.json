@@ -35,21 +35,56 @@
             {
               "fieldType": "FormFieldRepresentation",
               "id": "message",
-              "name": "Message",
+              "name": "Review Message",
               "type": "multi-line-text",
               "value": null,
               "required": false,
-              "readOnly": false,
+              "readOnly": true,
               "overrideId": false,
               "colspan": 1,
-              "placeholder": "Enter a custom message to send to the reviewer",
+              "placeholder": "No comment was added by the contract owner",
               "optionType": null,
               "hasEmptyValue": null,
               "options": null,
               "restUrl": null,
               "restIdProperty": null,
               "restLabelProperty": null,
-              "tab": null,
+              "tab": "tab_review",
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 1
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 2,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            }
+          ],
+          "2": [
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "feedback",
+              "name": "Review Feedback",
+              "type": "multi-line-text",
+              "value": null,
+              "required": false,
+              "readOnly": false,
+              "overrideId": false,
+              "colspan": 1,
+              "placeholder": "Enter any comments for the contract owner",
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": "tab_review",
               "params": {
                 "existingColspan": 1,
                 "maxColspan": 1
