@@ -436,61 +436,6 @@
             }
           ],
           "2": [
-            {
-              "fieldType": "RestFieldRepresentation",
-              "id": "currency",
-              "name": "Currency",
-              "type": "dropdown",
-              "value": "Please choose one...",
-              "required": false,
-              "readOnly": false,
-              "overrideId": true,
-              "colspan": 1,
-              "placeholder": null,
-              "optionType": null,
-              "hasEmptyValue": true,
-              "options": [
-                {
-                  "id": "empty",
-                  "name": "Please choose one..."
-                },
-                {
-                  "id": "gbp",
-                  "name": "British Pounds"
-                },
-                {
-                  "id": "eur",
-                  "name": "Euro"
-                },
-                {
-                  "id": "usd",
-                  "name": "US Dollar"
-                },
-                {
-                  "id": "yen",
-                  "name": "Japanese Yen"
-                }
-              ],
-              "restUrl": null,
-              "restIdProperty": null,
-              "restLabelProperty": null,
-              "tab": "tab_details",
-              "params": {
-                "existingColspan": 1,
-                "maxColspan": 2
-              },
-              "layout": {
-                "row": -1,
-                "column": -1,
-                "colspan": 1
-              },
-              "sizeX": 1,
-              "sizeY": 1,
-              "row": -1,
-              "col": -1,
-              "visibilityCondition": null,
-              "endpoint": null
-            }
           ]
         }
       },
