@@ -1,0 +1,82 @@
+{
+  "id": 4,
+  "name": "Select Attorney Embedded",
+  "key": "attorneyEmbed",
+  "hitIndicator": "FIRST",
+  "inputExpressions": [
+    {
+      "id": "3",
+      "variableId": "location",
+      "variableType": "formfield",
+      "type": "string",
+      "label": "Location",
+      "entries": null
+    },
+    {
+      "id": "5",
+      "variableId": "amount",
+      "variableType": "formfield",
+      "type": "number",
+      "label": "Amount",
+      "entries": null
+    }
+  ],
+  "outputExpressions": [
+    {
+      "id": "6",
+      "variableId": "caseOwner",
+      "variableType": "variable",
+      "type": "string",
+      "label": "Case Owner",
+      "entries": null
+    }
+  ],
+  "rules": [
+    {
+      "3": "== \"London\"",
+      "5": "< 100000",
+      "6": "\"julie.richards@acme.com\""
+    },
+    {
+      "3": "== \"London\"",
+      "5": ">= 100000",
+      "6": "\"david.brown@acme.com\""
+    },{
+      "3": "== \"Madrid\"",
+      "5": "< 100000",
+      "6": "\"julie.richards@acme.com\""
+    },
+    {
+      "3": "== \"Madrid\"",
+      "5": ">= 100000",
+      "6": "\"david.brown@acme.com\""
+    },{
+      "3": "== \"New York\"",
+      "5": "< 100000",
+      "6": "\"julie.richards@acme.com\""
+    },
+    {
+      "3": "== \"New York\"",
+      "5": ">= 100000",
+      "6": "\"david.brown@acme.com\""
+    },{
+      "3": "== \"Paris\"",
+      "5": "< 100000",
+      "6": "\"julie.richards@acme.com\""
+    },
+    {
+      "3": "== \"Paris\"",
+      "5": ">= 100000",
+      "6": "\"david.brown@acme.com\""
+    },{
+      "3": "== \"Tokyo\"",
+      "5": "< 100000",
+      "6": "\"julie.richards@acme.com\""
+    },
+    {
+      "3": "== \"Tokyo\"",
+      "5": ">= 100000",
+      "6": "\"david.brown@acme.com\""
+    }
+  ]
+}

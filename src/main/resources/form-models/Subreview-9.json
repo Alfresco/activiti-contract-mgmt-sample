@@ -1,0 +1,90 @@
+{
+  "referenceId": null,
+  "name": "Sub Review",
+  "description": null,
+  "editorJson": {
+    "tabs": [],
+    "fields": [
+      {
+        "fieldType": "ContainerRepresentation",
+        "id": "1448632361217",
+        "name": "Label",
+        "type": "container",
+        "value": null,
+        "required": false,
+        "readOnly": false,
+        "overrideId": false,
+        "colspan": 1,
+        "placeholder": null,
+        "optionType": null,
+        "hasEmptyValue": null,
+        "options": null,
+        "restUrl": null,
+        "restIdProperty": null,
+        "restLabelProperty": null,
+        "tab": null,
+        "layout": null,
+        "sizeX": 2,
+        "sizeY": 1,
+        "row": -1,
+        "col": -1,
+        "visibilityCondition": null,
+        "numberOfColumns": 2,
+        "fields": {
+          "1": [
+            {
+              "fieldType": "FormFieldRepresentation",
+              "id": "message",
+              "name": "Message",
+              "type": "multi-line-text",
+              "value": null,
+              "required": false,
+              "readOnly": false,
+              "overrideId": false,
+              "colspan": 1,
+              "placeholder": "Enter a custom message to send to the reviewer",
+              "optionType": null,
+              "hasEmptyValue": null,
+              "options": null,
+              "restUrl": null,
+              "restIdProperty": null,
+              "restLabelProperty": null,
+              "tab": null,
+              "params": {
+                "existingColspan": 1,
+                "maxColspan": 1
+              },
+              "layout": {
+                "row": -1,
+                "column": -1,
+                "colspan": 1
+              },
+              "sizeX": 1,
+              "sizeY": 2,
+              "row": -1,
+              "col": -1,
+              "visibilityCondition": null
+            }
+          ]
+        }
+      }
+    ],
+    "outcomes": [
+      {
+        "id": "approve",
+        "name": "Approve"
+      },
+      {
+        "id": "reject",
+        "name": "Reject"
+      },
+      {
+        "id": "cancel",
+        "name": "Cancel Contract"
+      }
+    ],
+    "javascriptEvents": [],
+    "customFieldTemplates": {},
+    "gridsterForm": false
+  }
+}

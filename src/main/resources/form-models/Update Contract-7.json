@@ -1,0 +1,18 @@
+{
+  "referenceId": null,
+  "name": "Update Contract Form",
+  "description": "",
+  "editorJson": {
+    "tabs": [],
+    "fields": [],
+    "outcomes": [
+      {
+        "id": "update",
+        "name": "Update Contract"
+      }
+    ],
+    "javascriptEvents": [],
+    "customFieldTemplates": {},
+    "gridsterForm": false
+  }
+}

@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef" xmlns:modeler="http://activiti.com/modeler" modeler:version="1.0en" modeler:exportDateTime="20151127142441877" modeler:modelId="5" modeler:modelVersion="12" modeler:modelLastUpdated="1448634256921">
+  <process id="caseMgmtReview" name="Case Management Review" isExecutable="true">
+    <extensionElements>
+      <modeler:executionvariables xmlns:modeler="http://activiti.com/modeler" modeler:variableName="outcome" modeler:variableType="string"/>
+    </extensionElements>
+    <startEvent id="startevent1" name="Start"/>
+    <userTask id="setupTask" name="Manage ${reviewName}" activiti:assignee="$INITIATOR" activiti:dueDate="P3D" activiti:formKey="10">
+      <extensionElements>
+        <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+          <activiti:field name="script">
+            <activiti:string><![CDATA[task.setVariable('outcome', task.getVariable('form10outcome'))]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="language">
+            <activiti:string>groovy</activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+        <modeler:allow-send-email>true</modeler:allow-send-email>
+        <modeler:form-reference-id>10</modeler:form-reference-id>
+        <modeler:form-reference-name>Subreview Start</modeler:form-reference-name>
+        <modeler:activiti-idm-initiator>true</modeler:activiti-idm-initiator>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flowSetup" sourceRef="setupTask" targetRef="setupGw"/>
+    <exclusiveGateway id="setupGw" name="Exclusive Setup Gateway" default="sid-2CDC8022-CAEB-4624-8D96-04153CC7A574"/>
+    <subProcess id="approvalSubprocess" name="Approval Subprocess">
+      <startEvent id="approvalSubprocessStart"/>
+      <parallelGateway id="approvalSubprocessParallelGw1"/>
+      <userTask id="approvalTask" name="${reviewName}" activiti:assignee="${taskAssignmentBean.assignTaskToAssignee('selectreviewer', execution)}" activiti:formKey="9">
+        <extensionElements>
+          <activiti:taskListener event="create" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+            <activiti:field name="script">
+              <activiti:string><![CDATA[task.setVariable('originalSubject', task.getVariable('subject'))
+              task.setVariable('originalMessage', task.getVariable('message'))]]></activiti:string>
+            </activiti:field>
+            <activiti:field name="language">
+              <activiti:string><![CDATA[JavaScript]]></activiti:string>
+            </activiti:field>
+          </activiti:taskListener>
+          <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+            <activiti:field name="script">
+              <activiti:string><![CDATA[// Approval count
+                      var approvalCount = task.getVariable('approvalCount');
+                      if (!approvalCount) {
+                        approvalCount = new java.lang.Integer(0)
+                        task.setVariable('approvalCount', approvalCount);
+                      }
+
+                      // Total approval count
+                      var nrOfFinishedApprovals = task.getVariable('nrOfFinishedApprovals');
+                      if (!nrOfFinishedApprovals) {
+                        nrOfFinishedApprovals = new java.lang.Integer(0);
+                      }
+                      task.setVariable('nrOfFinishedApprovals', new java.lang.Integer(nrOfFinishedApprovals + 1));
+
+                      // Update category based on outcome
+                      var outcome = task.getVariable('form9outcome'), action;
+                      if (outcome == 'Approve' || outcome == 'Complete') {
+                         task.setVariable('approvalCount', new java.lang.Integer(approvalCount + 1));
+                         task.setCategory('approved');
+                         action = outcome == 'Approve' ? 'approved' : 'completed';
+                      } else {
+                         task.setCategory('rejected');
+                         action = 'rejected';
+                      }
+                      task.setVariableLocal('submitOutcomeMessage', task.getVariable('reviewName') + ' ' + action + ' for contract');]]></activiti:string>
+            </activiti:field>
+            <activiti:field name="language">
+              <activiti:string><![CDATA[JavaScript]]></activiti:string>
+            </activiti:field>
+          </activiti:taskListener>
+          <modeler:allow-send-email>true</modeler:allow-send-email>
+          <modeler:form-reference-id>9</modeler:form-reference-id>
+          <modeler:form-reference-name>Sub Review</modeler:form-reference-name>
+          <modeler:activiti-idm-initiator>true</modeler:activiti-idm-initiator>
+          <modeler:activiti-idm-assignee-field>selectreviewer</modeler:activiti-idm-assignee-field>
+          <modeler:assignee-field-info-name>Select Reviewer</modeler:assignee-field-info-name>
+          <modeler:initiator-can-complete>true</modeler:initiator-can-complete>
+        </extensionElements>
+      </userTask>
+      <userTask id="cancelApprovalTask" name="Manage ${reviewName}" activiti:assignee="$INITIATOR" activiti:formKey="12">
+        <extensionElements>
+          <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+            <activiti:field name="script">
+              <activiti:string><![CDATA[//task.setVariable('outcome', task.getVariable('form12outcome'))]]></activiti:string>
+            </activiti:field>
+            <activiti:field name="language">
+              <activiti:string>groovy</activiti:string>
+            </activiti:field>
+          </activiti:taskListener>
+          <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+            <activiti:field name="script">
+              <activiti:string><![CDATA[/*var outcome = task.getVariable('form12outcome');
+                      if (outcome == 'Complete Early') {
+                         task.setCategory('cancellation');
+                         task.setVariable('cancelled', true);
+                      } else if (outcome == 'Recall') {
+                         task.setCategory('abort');
+                         task.setVariable('aborted', true);
+                      } else if (outcome == 'Send Reminders') {
+                        task.setVariableLocal('submitOutcomeMessage', 'Reminder emails have been sent to all remaining reviewers');
+                      } else if (outcome == 'Cancel Contract') {
+                        task.setVariableLocal('submitOutcomeMessage', 'Contract cancelled');
+                      }*/]]></activiti:string>
+            </activiti:field>
+            <activiti:field name="language">
+              <activiti:string><![CDATA[JavaScript]]></activiti:string>
+            </activiti:field>
+          </activiti:taskListener>
+          <modeler:allow-send-email>true</modeler:allow-send-email>
+          <modeler:initiator-can-complete>true</modeler:initiator-can-complete>
+          <modeler:form-reference-id>12</modeler:form-reference-id>
+          <modeler:form-reference-name>Manage Sub Review</modeler:form-reference-name>
+        </extensionElements>
+      </userTask>
+      <exclusiveGateway id="completeRecallGateway" name="Complete or Recall Gateway" default="completeFlow"/>
+      <endEvent id="approvalSubprocessEnd">
+        <terminateEventDefinition/>
+      </endEvent>
+      <sequenceFlow id="approvalSubprocess1" sourceRef="approvalSubprocessStart" targetRef="approvalSubprocessParallelGw1"/>
+      <sequenceFlow id="approvalSubprocess6" sourceRef="cancelApprovalTask" targetRef="completeRecallGateway"/>
+      <sequenceFlow id="cancelContractFlow1" sourceRef="completeRecallGateway" targetRef="approvalSubprocessEnd">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${execution.hasVariable('form12outcome') && form12outcome == 'Cancel Contract'}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="approvalSubprocess5" sourceRef="approvalTask" targetRef="approvalSubprocessEnd"/>
+      <sequenceFlow id="completeFlow" sourceRef="completeRecallGateway" targetRef="approvalSubprocessEnd"/>
+      <sequenceFlow id="approvalSubprocess3" sourceRef="approvalSubprocessParallelGw1" targetRef="cancelApprovalTask"/>
+      <sequenceFlow id="approvalSubprocess2" sourceRef="approvalSubprocessParallelGw1" targetRef="approvalTask"/>
+    </subProcess>
+    <sequenceFlow id="flow2a" sourceRef="approvalSubprocess" targetRef="finishOrCancelledGateway"/>
+    <exclusiveGateway id="finishOrCancelledGateway" name="Exclusive Gateway - Finish or Cancel Contract" default="finishOrCancelledFlow1"/>
+    <sequenceFlow id="finishOrCancelledFlow1" sourceRef="finishOrCancelledGateway" targetRef="finishReviewTask"/>
+    <userTask id="finishReviewTask" name="Manage ${reviewName}" activiti:assignee="$INITIATOR" activiti:formKey="11">
+      <extensionElements>
+        <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+          <activiti:field name="script">
+            <activiti:string><![CDATA[//task.setVariable('outcome', task.getVariable('form11outcome'))]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="language">
+            <activiti:string>groovy</activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+        <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+          <activiti:field name="script">
+            <activiti:string><![CDATA[//if (form11outcome == 'Cancel Contract') {
+                //task.setVariableLocal('submitOutcomeMessage', 'Contract cancelled');
+              //}]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="language">
+            <activiti:string><![CDATA[JavaScript]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+        <modeler:allow-send-email>true</modeler:allow-send-email>
+        <modeler:initiator-can-complete>true</modeler:initiator-can-complete>
+        <modeler:form-reference-id>11</modeler:form-reference-id>
+        <modeler:form-reference-name>Finish Sub Review</modeler:form-reference-name>
+        <modeler:activiti-idm-initiator>true</modeler:activiti-idm-initiator>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow2c" sourceRef="finishReviewTask" targetRef="endEvent"/>
+    <endEvent id="endEvent" name="End"/>
+    <scriptTask id="setCaseStatus" name="Set Status" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>execution.setVariable('status', execution.getVariable('reviewName'));</script>
+    </scriptTask>
+    <sequenceFlow id="flow1a" sourceRef="startevent1" targetRef="setCaseStatus"/>
+    <sequenceFlow id="flow1b" sourceRef="setCaseStatus" targetRef="setupTask"/>
+    <sequenceFlow id="finishOrCancelledFlow2" sourceRef="finishOrCancelledGateway" targetRef="endEvent">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${execution.hasVariable('form12outcome') && form12outcome == 'Cancel Contract' || execution.hasVariable('skipFinishTask') && skipFinishTask == true}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flowSetupb" sourceRef="setupGw" targetRef="endEvent">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:outcomeFormId="10" modeler:outcomeFormName="Sub Review" modeler:rightOutcomeName="Cancel Review" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(form10outcome =='Cancel Review')}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-2CDC8022-CAEB-4624-8D96-04153CC7A574" sourceRef="setupGw" targetRef="approvalSubprocess"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_caseMgmtReview">
+    <bpmndi:BPMNPlane bpmnElement="caseMgmtReview" id="BPMNPlane_caseMgmtReview">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="0.0" y="272.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="setupTask" id="BPMNShape_setupTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="230.0" y="255.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="setupGw" id="BPMNShape_setupGw">
+        <omgdc:Bounds height="40.0" width="40.0" x="380.0" y="261.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approvalSubprocess" id="BPMNShape_approvalSubprocess">
+        <omgdc:Bounds height="487.0" width="1140.0" x="1490.0" y="99.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approvalSubprocessStart" id="BPMNShape_approvalSubprocessStart">
+        <omgdc:Bounds height="30.0" width="30.0" x="1510.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approvalSubprocessParallelGw1" id="BPMNShape_approvalSubprocessParallelGw1">
+        <omgdc:Bounds height="40.0" width="40.0" x="1590.0" y="355.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approvalTask" id="BPMNShape_approvalTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="1680.0" y="257.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="cancelApprovalTask" id="BPMNShape_cancelApprovalTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="1680.0" y="424.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="completeRecallGateway" id="BPMNShape_completeRecallGateway">
+        <omgdc:Bounds height="40.0" width="40.0" x="1860.0" y="389.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approvalSubprocessEnd" id="BPMNShape_approvalSubprocessEnd">
+        <omgdc:Bounds height="28.0" width="28.0" x="2580.0" y="364.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="finishOrCancelledGateway" id="BPMNShape_finishOrCancelledGateway">
+        <omgdc:Bounds height="40.0" width="40.0" x="2830.0" y="333.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="finishReviewTask" id="BPMNShape_finishReviewTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="2916.6665507687508" y="399.99998410542867"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endEvent" id="BPMNShape_endEvent">
+        <omgdc:Bounds height="28.0" width="28.0" x="3070.0" y="278.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="setCaseStatus" id="BPMNShape_setCaseStatus">
+        <omgdc:Bounds height="80.0" width="100.0" x="86.0" y="247.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="finishOrCancelledFlow1" id="BPMNEdge_finishOrCancelledFlow1">
+        <omgdi:waypoint x="2870.0" y="353.0"/>
+        <omgdi:waypoint x="2882.0" y="353.0"/>
+        <omgdi:waypoint x="2882.0" y="429.99998410542867"/>
+        <omgdi:waypoint x="2916.6665507687508" y="429.99998410542867"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowSetupb" id="BPMNEdge_flowSetupb">
+        <omgdi:waypoint x="419.9183673469388" y="281.0816326530612"/>
+        <omgdi:waypoint x="3070.000117574439" y="291.9426234326821"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="approvalSubprocess1" id="BPMNEdge_approvalSubprocess1">
+        <omgdi:waypoint x="1540.0" y="375.0"/>
+        <omgdi:waypoint x="1590.0" y="375.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="finishOrCancelledFlow2" id="BPMNEdge_finishOrCancelledFlow2">
+        <omgdi:waypoint x="2870.0" y="353.0"/>
+        <omgdi:waypoint x="2882.0" y="353.0"/>
+        <omgdi:waypoint x="2882.0" y="293.0"/>
+        <omgdi:waypoint x="3070.0001715486555" y="292.0693060814423"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flowSetup" id="BPMNEdge_flowSetup">
+        <omgdi:waypoint x="330.0" y="285.0"/>
+        <omgdi:waypoint x="342.0" y="285.0"/>
+        <omgdi:waypoint x="342.0" y="281.0"/>
+        <omgdi:waypoint x="380.0" y="281.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2a" id="BPMNEdge_flow2a">
+        <omgdi:waypoint x="2630.0" y="353.1673007240705"/>
+        <omgdi:waypoint x="2647.7775608080406" y="353.5"/>
+        <omgdi:waypoint x="2830.5" y="353.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1a" id="BPMNEdge_flow1a">
+        <omgdi:waypoint x="30.0" y="287.0"/>
+        <omgdi:waypoint x="86.0" y="287.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2c" id="BPMNEdge_flow2c">
+        <omgdi:waypoint x="3016.6665507687508" y="429.99998410542867"/>
+        <omgdi:waypoint x="3084.0" y="429.99998410542867"/>
+        <omgdi:waypoint x="3084.0" y="306.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1b" id="BPMNEdge_flow1b">
+        <omgdi:waypoint x="186.0" y="287.0"/>
+        <omgdi:waypoint x="192.0" y="287.0"/>
+        <omgdi:waypoint x="192.0" y="285.0"/>
+        <omgdi:waypoint x="230.0" y="285.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="completeFlow" id="BPMNEdge_completeFlow">
+        <omgdi:waypoint x="1900.0" y="409.0"/>
+        <omgdi:waypoint x="1944.0" y="409.0"/>
+        <omgdi:waypoint x="1944.0" y="379.0"/>
+        <omgdi:waypoint x="2580.000016568018" y="378.0215384360492"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-2CDC8022-CAEB-4624-8D96-04153CC7A574" id="BPMNEdge_sid-2CDC8022-CAEB-4624-8D96-04153CC7A574">
+        <omgdi:waypoint x="400.5" y="300.5"/>
+        <omgdi:waypoint x="400.5" y="342.5"/>
+        <omgdi:waypoint x="1490.0" y="342.5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="cancelContractFlow1" id="BPMNEdge_cancelContractFlow1">
+        <omgdi:waypoint x="1900.0" y="409.0"/>
+        <omgdi:waypoint x="1944.0" y="409.0"/>
+        <omgdi:waypoint x="1944.0" y="379.0"/>
+        <omgdi:waypoint x="2580.000016568018" y="378.0215384360492"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="approvalSubprocess6" id="BPMNEdge_approvalSubprocess6">
+        <omgdi:waypoint x="1780.0" y="443.9193548387097"/>
+        <omgdi:waypoint x="1792.0" y="441.5"/>
+        <omgdi:waypoint x="1792.0" y="409.0"/>
+        <omgdi:waypoint x="1860.0" y="409.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="approvalSubprocess2" id="BPMNEdge_approvalSubprocess2">
+        <omgdi:waypoint x="1630.0" y="375.0"/>
+        <omgdi:waypoint x="1642.0" y="375.0"/>
+        <omgdi:waypoint x="1642.0" y="287.0"/>
+        <omgdi:waypoint x="1680.0" y="287.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="approvalSubprocess3" id="BPMNEdge_approvalSubprocess3">
+        <omgdi:waypoint x="1630.0" y="375.0"/>
+        <omgdi:waypoint x="1642.0" y="375.0"/>
+        <omgdi:waypoint x="1642.0" y="454.0"/>
+        <omgdi:waypoint x="1680.0" y="454.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="approvalSubprocess5" id="BPMNEdge_approvalSubprocess5">
+        <omgdi:waypoint x="1780.0" y="287.0"/>
+        <omgdi:waypoint x="1942.0" y="287.0"/>
+        <omgdi:waypoint x="1942.0" y="379.0"/>
+        <omgdi:waypoint x="2580.00001646653" y="378.02147236738267"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

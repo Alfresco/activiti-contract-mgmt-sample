@@ -1,0 +1,44 @@
+{
+  "models": [
+    {
+      "id": 1,
+      "name": "Case Management",
+      "version": 1,
+      "modelType": 0,
+      "description": "null",
+      "stencilSetId": null,
+      "createdByFullName": " Administrator",
+      "createdBy": 1,
+      "lastUpdatedByFullName": " Administrator",
+      "lastUpdatedBy": 1,
+      "lastUpdated": "2015-11-20T15:24:10.761+0000"
+    },
+    {
+      "id": 2,
+      "name": "Case Management Review",
+      "version": 1,
+      "modelType": 0,
+      "description": null,
+      "stencilSetId": null,
+      "createdByFullName": " Administrator",
+      "createdBy": 1,
+      "lastUpdatedByFullName": " Administrator",
+      "lastUpdatedBy": 1,
+      "lastUpdated": "2015-11-20T15:02:18.020+0000"
+    }
+  ],
+  "theme": "theme-1",
+  "icon": "glyphicon-cloud",
+  "publishIdentityInfo": [
+    {
+      "type": "user",
+      "person": {
+        "id": 1,
+        "firstName": null,
+        "lastName": "Administrator",
+        "email": "admin@app.activiti.com"
+      },
+      "group": null
+    }
+  ]
+}

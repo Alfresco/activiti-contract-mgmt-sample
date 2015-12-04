@@ -1,0 +1,30 @@
+{
+  "referenceId": null,
+  "name": "Legal Review",
+  "description": "Form with just the outcomes",
+  "editorJson": {
+    "tabs": [],
+    "fields": [],
+    "outcomes": [
+      {
+        "id": "sendToParalegal",
+        "name": "Send to Paralegal"
+      },
+      {
+        "id": "externalReview",
+        "name": "Send to Customer"
+      },
+      {
+        "id": "sign",
+        "name": "Send for Signature"
+      },
+      {
+        "id": "deviate",
+        "name": "Request Deviation"
+      }
+    ],
+    "javascriptEvents": [],
+    "customFieldTemplates": {},
+    "gridsterForm": false
+  }
+}

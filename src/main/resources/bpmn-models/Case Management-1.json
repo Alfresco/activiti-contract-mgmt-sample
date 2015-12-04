@@ -1,0 +1,4040 @@
+{
+  "resourceId": 1068,
+  "properties": {
+    "process_id": "caseMgmt",
+    "name": "Case Management",
+    "documentation": "",
+    "process_author": "",
+    "process_version": "",
+    "process_namespace": "http://www.activiti.org/processdef",
+    "executionlisteners": "{\"executionListeners\":[]}",
+    "eventlisteners": "{\"eventListeners\":[]}",
+    "signaldefinitions": "[]",
+    "messagedefinitions": "[]",
+    "executionvariables": "[{\"variableName\":\"location\",\"variableType\":\"string\"},{\"variableName\":\"amount\",\"variableType\":\"integer\"}]"
+  },
+  "stencil": {
+    "id": "BPMNDiagram"
+  },
+  "childShapes": [
+    {
+      "resourceId": "startevent",
+      "properties": {
+        "overrideid": "startevent",
+        "name": "Start",
+        "documentation": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "initiator": "",
+        "formkeydefinition": "",
+        "formreference": "",
+        "formproperties": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "stencil": {
+        "id": "StartNoneEvent"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow0a"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 30,
+          "y": 522
+        },
+        "upperLeft": {
+          "x": 0,
+          "y": 492
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "newCaseTask",
+      "properties": {
+        "overrideid": "newCaseTask",
+        "name": "New Contract",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false",
+        "usertasksendemail": true,
+        "usertaskassignment": {
+          "assignment": {
+            "type": "static",
+            "assignee": "$INITIATOR"
+          }
+        },
+        "formkeydefinition": "",
+        "formreference": {
+          "id": 6,
+          "name": "Case Details"
+        },
+        "duedatedefinition": "",
+        "prioritydefinition": "",
+        "formproperties": "",
+        "tasklisteners": {
+          "taskListeners": [
+            {
+              "event": "complete",
+              "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+              "fields": [
+                {
+                  "name": "script",
+                  "stringValue": "task.setVariableLocal('submitOutcomeAction', 'return');"
+                },
+                {
+                  "name": "language",
+                  "stringValue": "JavaScript"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "stencil": {
+        "id": "UserTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow1a"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 330,
+          "y": 540
+        },
+        "upperLeft": {
+          "x": 230,
+          "y": 480
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "newGw",
+      "properties": {
+        "overrideid": "newGw",
+        "name": "Exclusive Gateway",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "sequencefloworder": "",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      },
+      "stencil": {
+        "id": "ExclusiveGateway"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow1c"
+        },
+        {
+          "resourceId": "flow1b"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 420,
+          "y": 535
+        },
+        "upperLeft": {
+          "x": 380,
+          "y": 495
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "legalSubprocess",
+      "properties": {
+        "overrideid": "legalSubprocess",
+        "name": "Legal Review Subprocess",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "istransaction": false,
+        "activitytype": "Sub-Process",
+        "subprocesstype": "Embedded"
+      },
+      "stencil": {
+        "id": "SubProcess"
+      },
+      "childShapes": [
+        {
+          "resourceId": "legalSubProcessStart",
+          "properties": {
+            "overrideid": "legalSubProcessStart",
+            "name": "",
+            "documentation": "",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "initiator": "",
+            "formkeydefinition": "",
+            "formreference": "",
+            "formproperties": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true
+          },
+          "stencil": {
+            "id": "StartNoneEvent"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-0E01E0C9-AA7D-4AAD-B339-9BEA79C6DA16"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 50,
+              "y": 165
+            },
+            "upperLeft": {
+              "x": 20,
+              "y": 135
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "legalSubProcessSplit",
+          "properties": {
+            "overrideid": "legalSubProcessSplit",
+            "name": "",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "sequencefloworder": "",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          },
+          "stencil": {
+            "id": "ParallelGateway"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-87121D24-2896-479E-BFE8-B483835BDE09"
+            },
+            {
+              "resourceId": "sid-F3C2E4C2-2E8E-4757-976B-003783D23B38"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 140,
+              "y": 170
+            },
+            "upperLeft": {
+              "x": 100,
+              "y": 130
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "legalReviewTask",
+          "properties": {
+            "overrideid": "legalReviewTask",
+            "name": "Legal Review",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "multiinstance_type": "None",
+            "multiinstance_cardinality": "",
+            "multiinstance_collection": "",
+            "multiinstance_variable": "",
+            "multiinstance_condition": "",
+            "isforcompensation": "false",
+            "usertasksendemail": true,
+            "usertaskassignment": {
+              "assignment": {
+                "type": "static",
+                "assignee": "$INITIATOR"
+              }
+            },
+            "formkeydefinition": "",
+            "formreference": {
+              "id": 8,
+              "name": "Legal Review"
+            },
+            "duedatedefinition": "",
+            "prioritydefinition": "",
+            "formproperties": {
+              "formProperties": [
+                {
+                  "id": "outcome",
+                  "name": null,
+                  "type": "string",
+                  "expression": null,
+                  "variable": null,
+                  "required": false,
+                  "readable": true,
+                  "writable": true
+                },
+                {
+                  "id": "paralegal",
+                  "name": null,
+                  "type": "string",
+                  "expression": null,
+                  "variable": null,
+                  "required": false,
+                  "readable": true,
+                  "writable": true
+                }
+              ]
+            },
+            "tasklisteners": {
+              "taskListeners": []
+            }
+          },
+          "stencil": {
+            "id": "UserTask"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-CC8506FB-29D4-4FA0-8DD1-D0A4A12C9C6D"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 290,
+              "y": 260
+            },
+            "upperLeft": {
+              "x": 190,
+              "y": 200
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "reassignTask",
+          "properties": {
+            "overrideid": "reassignTask",
+            "name": "Update Contract",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "multiinstance_type": "None",
+            "multiinstance_cardinality": "",
+            "multiinstance_collection": "",
+            "multiinstance_variable": "",
+            "multiinstance_condition": "",
+            "isforcompensation": "false",
+            "usertasksendemail": true,
+            "usertaskassignment": {
+              "assignment": {
+                "type": "static",
+                "assignee": "$INITIATOR"
+              }
+            },
+            "formkeydefinition": "",
+            "formreference": {
+              "id": 7,
+              "name": "Update Contract Form"
+            },
+            "duedatedefinition": "",
+            "prioritydefinition": "",
+            "formproperties": {
+              "formProperties": [
+                {
+                  "id": "outcome",
+                  "name": null,
+                  "type": "string",
+                  "expression": null,
+                  "variable": null,
+                  "required": false,
+                  "readable": true,
+                  "writable": true
+                }
+              ]
+            },
+            "tasklisteners": {
+              "taskListeners": [
+                {
+                  "event": "complete",
+                  "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+                  "fields": [
+                    {
+                      "name": "script",
+                      "stringValue": "task.setVariableLocal('submitOutcomeAction', 'return');"
+                    },
+                    {
+                      "name": "language",
+                      "stringValue": "JavaScript"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "stencil": {
+            "id": "UserTask"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "flow7837328"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 290,
+              "y": 100
+            },
+            "upperLeft": {
+              "x": 190,
+              "y": 40
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "reassignTaskGw",
+          "properties": {
+            "overrideid": "reassignTaskGw",
+            "name": "",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "sequencefloworder": "",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          },
+          "stencil": {
+            "id": "ExclusiveGateway"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-995730A7-9C8A-49A3-8763-AFC8323B9125"
+            },
+            {
+              "resourceId": "flow3009977"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 530,
+              "y": 120
+            },
+            "upperLeft": {
+              "x": 490,
+              "y": 80
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "legalSubProcessJoin",
+          "properties": {
+            "overrideid": "legalSubProcessJoin",
+            "name": "",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "sequencefloworder": "",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          },
+          "stencil": {
+            "id": "ExclusiveGateway"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-83E8BCB3-350B-4737-AEE4-3672DBAF005B"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 620,
+              "y": 178
+            },
+            "upperLeft": {
+              "x": 580,
+              "y": 138
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "legalSubProcessEnd",
+          "properties": {
+            "overrideid": "legalSubProcessEnd",
+            "name": "",
+            "documentation": "",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true
+          },
+          "stencil": {
+            "id": "EndTerminateEvent"
+          },
+          "childShapes": [],
+          "outgoing": [],
+          "bounds": {
+            "lowerRight": {
+              "x": 698,
+              "y": 171
+            },
+            "upperLeft": {
+              "x": 670,
+              "y": 143
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "setAttorneyParalegal",
+          "properties": {
+            "overrideid": "setAttorneyParalegal",
+            "name": "Set Attorney",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "multiinstance_type": "None",
+            "multiinstance_cardinality": "",
+            "multiinstance_collection": "",
+            "multiinstance_variable": "",
+            "multiinstance_condition": "",
+            "isforcompensation": "false",
+            "decisiontaskdecisiontablereference": {
+              "id": 4,
+              "name": "Select Attorney Embedded"
+            }
+          },
+          "stencil": {
+            "id": "DecisionTask"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-43E05ACF-C207-4E99-8A44-914A000F4D26"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 440,
+              "y": 80
+            },
+            "upperLeft": {
+              "x": 340,
+              "y": 20
+            }
+          },
+          "dockers": []
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "flow5"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1940,
+          "y": 495
+        },
+        "upperLeft": {
+          "x": 1220,
+          "y": 215
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "sid-0E01E0C9-AA7D-4AAD-B339-9BEA79C6DA16",
+      "properties": {
+        "overrideid": "sid-0E01E0C9-AA7D-4AAD-B339-9BEA79C6DA16",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalSubProcessSplit"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1320.40625,
+          "y": 365
+        },
+        "upperLeft": {
+          "x": 1270.609375,
+          "y": 365
+        }
+      },
+      "dockers": [
+        {
+          "x": 15,
+          "y": 15
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "legalSubProcessSplit"
+      }
+    },
+    {
+      "resourceId": "sid-87121D24-2896-479E-BFE8-B483835BDE09",
+      "properties": {
+        "overrideid": "sid-87121D24-2896-479E-BFE8-B483835BDE09",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalReviewTask"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1409.5,
+          "y": 445
+        },
+        "upperLeft": {
+          "x": 1360,
+          "y": 365
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 1372,
+          "y": 365
+        },
+        {
+          "x": 1372,
+          "y": 445
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "legalReviewTask"
+      }
+    },
+    {
+      "resourceId": "sid-F3C2E4C2-2E8E-4757-976B-003783D23B38",
+      "properties": {
+        "overrideid": "sid-F3C2E4C2-2E8E-4757-976B-003783D23B38",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "reassignTask"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1409.5,
+          "y": 365
+        },
+        "upperLeft": {
+          "x": 1360,
+          "y": 285
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 1372,
+          "y": 365
+        },
+        {
+          "x": 1372,
+          "y": 285
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "reassignTask"
+      }
+    },
+    {
+      "resourceId": "sid-83E8BCB3-350B-4737-AEE4-3672DBAF005B",
+      "properties": {
+        "overrideid": "sid-83E8BCB3-350B-4737-AEE4-3672DBAF005B",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalSubProcessEnd"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1890.5313208541468,
+          "y": 372.769346081597
+        },
+        "upperLeft": {
+          "x": 1839.3749291458532,
+          "y": 372.160341418403
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 14,
+          "y": 14
+        }
+      ],
+      "target": {
+        "resourceId": "legalSubProcessEnd"
+      }
+    },
+    {
+      "resourceId": "sid-CC8506FB-29D4-4FA0-8DD1-D0A4A12C9C6D",
+      "properties": {
+        "overrideid": "sid-CC8506FB-29D4-4FA0-8DD1-D0A4A12C9C6D",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalSubProcessJoin"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1800.375,
+          "y": 445
+        },
+        "upperLeft": {
+          "x": 1510.40625,
+          "y": 373
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 1522,
+          "y": 445
+        },
+        {
+          "x": 1522,
+          "y": 373
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "legalSubProcessJoin"
+      }
+    },
+    {
+      "resourceId": "sid-995730A7-9C8A-49A3-8763-AFC8323B9125",
+      "properties": {
+        "overrideid": "sid-995730A7-9C8A-49A3-8763-AFC8323B9125",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": true
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalSubProcessJoin"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1799.96875,
+          "y": 373
+        },
+        "upperLeft": {
+          "x": 1750,
+          "y": 315
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 1762,
+          "y": 315
+        },
+        {
+          "x": 1762,
+          "y": 373
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "legalSubProcessJoin"
+      }
+    },
+    {
+      "resourceId": "flow3009977",
+      "properties": {
+        "overrideid": "flow3009977",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "type": "static",
+            "staticValue": "${caseOwner == previousCaseOwner}"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "reassignTask"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1710,
+          "y": 315
+        },
+        "upperLeft": {
+          "x": 1510.2734375,
+          "y": 285
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 1698,
+          "y": 315
+        },
+        {
+          "x": 1698,
+          "y": 285
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "reassignTask"
+      }
+    },
+    {
+      "resourceId": "flow5",
+      "properties": {
+        "overrideid": "flow5",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalReviewGw"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1989.96875,
+          "y": 405
+        },
+        "upperLeft": {
+          "x": 1940.6484375,
+          "y": 355
+        }
+      },
+      "dockers": [
+        {
+          "x": 360,
+          "y": 140
+        },
+        {
+          "x": 1952,
+          "y": 355
+        },
+        {
+          "x": 1952,
+          "y": 405
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "legalReviewGw"
+      }
+    },
+    {
+      "resourceId": "legalReviewGw",
+      "properties": {
+        "overrideid": "legalReviewGw",
+        "name": "Exclusive Review Gateway",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "sequencefloworder": "",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      },
+      "stencil": {
+        "id": "ExclusiveGateway"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow6"
+        },
+        {
+          "resourceId": "flow10a"
+        },
+        {
+          "resourceId": "flow8"
+        },
+        {
+          "resourceId": "flow9"
+        },
+        {
+          "resourceId": "flow10"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2030,
+          "y": 425
+        },
+        "upperLeft": {
+          "x": 1990,
+          "y": 385
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "paralegalSubProcess",
+      "properties": {
+        "overrideid": "paralegalSubProcess",
+        "name": "Paralegal Subprocess",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "istransaction": "false",
+        "activitytype": "Sub-Process",
+        "subprocesstype": "Embedded"
+      },
+      "stencil": {
+        "id": "SubProcess"
+      },
+      "childShapes": [
+        {
+          "resourceId": "paralegalReview",
+          "properties": {
+            "overrideid": "paralegalReview",
+            "name": "Paralegal Review",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "callactivitycalledelement": "caseMgmtReview",
+            "callactivityinparameters": {
+              "inParameters": [
+                {
+                  "source": "initiator",
+                  "target": "initiator",
+                  "sourceExpression": null
+                },
+                {
+                  "source": null,
+                  "target": "reviewName",
+                  "sourceExpression": "Paralegal Review"
+                },
+                {
+                  "source": null,
+                  "target": "reviewKey",
+                  "sourceExpression": "paralegalReview"
+                },
+                {
+                  "source": null,
+                  "target": "setCreatorWritable",
+                  "sourceExpression": "${true}"
+                }
+              ]
+            },
+            "callactivityoutparameters": {
+              "outParameters": []
+            },
+            "multiinstance_type": "None",
+            "multiinstance_cardinality": "",
+            "multiinstance_collection": "",
+            "multiinstance_variable": "",
+            "multiinstance_condition": "",
+            "isforcompensation": "false"
+          },
+          "stencil": {
+            "id": "CallActivity"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-1EDF667C-7970-48A4-92CC-F0E7F14B9F7D"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 290,
+              "y": 275
+            },
+            "upperLeft": {
+              "x": 190,
+              "y": 215
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "paralegalGW",
+          "properties": {
+            "overrideid": "paralegalGW",
+            "name": "",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "sequencefloworder": "",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          },
+          "stencil": {
+            "id": "ParallelGateway"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-DC0B6C9A-B4EA-47B9-AA51-91B5810B5498"
+            },
+            {
+              "resourceId": "sid-CD301997-6AC0-4870-8301-9FC1E1FDE61E"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 140,
+              "y": 185
+            },
+            "upperLeft": {
+              "x": 100,
+              "y": 145
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "paralegalReviseTask",
+          "properties": {
+            "overrideid": "paralegalReviseTask",
+            "name": "Update Contract",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "multiinstance_type": "None",
+            "multiinstance_cardinality": "",
+            "multiinstance_collection": "",
+            "multiinstance_variable": "",
+            "multiinstance_condition": "",
+            "isforcompensation": "false",
+            "usertasksendemail": true,
+            "usertaskassignment": {
+              "assignment": {
+                "type": "static",
+                "assignee": "$INITIATOR"
+              }
+            },
+            "formkeydefinition": "",
+            "formreference": {
+              "id": 7,
+              "name": "Update Contract Form"
+            },
+            "duedatedefinition": "",
+            "prioritydefinition": "",
+            "formproperties": "",
+            "tasklisteners": {
+              "taskListeners": [
+                {
+                  "event": "complete",
+                  "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+                  "fields": [
+                    {
+                      "name": "script",
+                      "stringValue": "task.setVariableLocal('submitOutcomeAction', 'return');"
+                    },
+                    {
+                      "name": "language",
+                      "stringValue": "JavaScript"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "stencil": {
+            "id": "UserTask"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-350E909E-8354-4470-93C1-C648F385F5EA"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 290,
+              "y": 115
+            },
+            "upperLeft": {
+              "x": 190,
+              "y": 55
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "paralegalStart",
+          "properties": {
+            "overrideid": "paralegalStart",
+            "name": "",
+            "documentation": "",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "initiator": "",
+            "formkeydefinition": "",
+            "formreference": "",
+            "formproperties": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true
+          },
+          "stencil": {
+            "id": "StartNoneEvent"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-FF9D7A65-FB0A-4CFF-8953-844139E65598"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 50,
+              "y": 180
+            },
+            "upperLeft": {
+              "x": 20,
+              "y": 150
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "paralegalEnd",
+          "properties": {
+            "overrideid": "paralegalEnd",
+            "name": "",
+            "documentation": "",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true
+          },
+          "stencil": {
+            "id": "EndTerminateEvent"
+          },
+          "childShapes": [],
+          "outgoing": [],
+          "bounds": {
+            "lowerRight": {
+              "x": 403,
+              "y": 308
+            },
+            "upperLeft": {
+              "x": 375,
+              "y": 280
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "sid-930F755E-CB06-4F47-9F50-D50490107F3D",
+          "properties": {
+            "overrideid": "sid-930F755E-CB06-4F47-9F50-D50490107F3D",
+            "name": "Set Attorney",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "multiinstance_type": "None",
+            "multiinstance_cardinality": "",
+            "multiinstance_collection": "",
+            "multiinstance_variable": "",
+            "multiinstance_condition": "",
+            "isforcompensation": "false",
+            "decisiontaskdecisiontablereference": {
+              "id": 4,
+              "name": "Select Attorney Embedded"
+            }
+          },
+          "stencil": {
+            "id": "DecisionTask"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-A438437B-C07E-4591-B7B0-B591C79F0765"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 440,
+              "y": 80
+            },
+            "upperLeft": {
+              "x": 340,
+              "y": 20
+            }
+          },
+          "dockers": []
+        },
+        {
+          "resourceId": "paralegalSetCaseOwner",
+          "properties": {
+            "scriptformat": "groovy",
+            "scripttext": "// Do nothing",
+            "executionvariables": "",
+            "overrideid": "paralegalSetCaseOwner",
+            "name": "Set Owner",
+            "documentation": "",
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "multiinstance_type": "None",
+            "multiinstance_cardinality": "",
+            "multiinstance_collection": "",
+            "multiinstance_variable": "",
+            "multiinstance_condition": "",
+            "isforcompensation": "false"
+          },
+          "stencil": {
+            "id": "ScriptTask"
+          },
+          "childShapes": [],
+          "outgoing": [
+            {
+              "resourceId": "sid-A438437B-C07E-4591-B7B0-F891C66678C7"
+            }
+          ],
+          "bounds": {
+            "lowerRight": {
+              "x": 590,
+              "y": 145
+            },
+            "upperLeft": {
+              "x": 490,
+              "y": 85
+            }
+          },
+          "dockers": []
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "flow11"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2690,
+          "y": 490
+        },
+        "upperLeft": {
+          "x": 2080,
+          "y": 160
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "sid-FF9D7A65-FB0A-4CFF-8953-844139E65598",
+      "properties": {
+        "overrideid": "sid-FF9D7A65-FB0A-4CFF-8953-844139E65598",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "paralegalGW"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2180.40625,
+          "y": 325
+        },
+        "upperLeft": {
+          "x": 2130.609375,
+          "y": 325
+        }
+      },
+      "dockers": [
+        {
+          "x": 15,
+          "y": 15
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "paralegalGW"
+      }
+    },
+    {
+      "resourceId": "sid-DC0B6C9A-B4EA-47B9-AA51-91B5810B5498",
+      "properties": {
+        "overrideid": "sid-DC0B6C9A-B4EA-47B9-AA51-91B5810B5498",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "paralegalReviseTask"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2269.5,
+          "y": 325
+        },
+        "upperLeft": {
+          "x": 2220,
+          "y": 245
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2232,
+          "y": 325
+        },
+        {
+          "x": 2232,
+          "y": 245
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "paralegalReviseTask"
+      }
+    },
+    {
+      "resourceId": "sid-1EDF667C-7970-48A4-92CC-F0E7F14B9F7D",
+      "properties": {
+        "overrideid": "sid-1EDF667C-7970-48A4-92CC-F0E7F14B9F7D",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "paralegalEnd"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2455.7656910523797,
+          "y": 455
+        },
+        "upperLeft": {
+          "x": 2370.40625,
+          "y": 405
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 2382,
+          "y": 405
+        },
+        {
+          "x": 2382,
+          "y": 455
+        },
+        {
+          "x": 14,
+          "y": 14
+        }
+      ],
+      "target": {
+        "resourceId": "paralegalEnd"
+      }
+    },
+    {
+      "resourceId": "sid-350E909E-8354-4470-93C1-C648F385F5EA",
+      "properties": {
+        "overrideid": "sid-350E909E-8354-4470-93C1-C648F385F5EA",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-930F755E-CB06-4F47-9F50-D50490107F3D"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2419.5,
+          "y": 234.84142632227352
+        },
+        "upperLeft": {
+          "x": 2370.386525441523,
+          "y": 210
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 2382,
+          "y": 232.5
+        },
+        {
+          "x": 2382,
+          "y": 210
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "sid-930F755E-CB06-4F47-9F50-D50490107F3D"
+      }
+    },
+    {
+      "resourceId": "sid-A438437B-C07E-4591-B7B0-F891C66678C7",
+      "properties": {
+        "overrideid": "sid-A438437B-C07E-4591-B7B0-F891C66678C7",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "paralegalReviseTask"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2569.613474558477,
+          "y": 287.5
+        },
+        "upperLeft": {
+          "x": 2370.2734375,
+          "y": 245
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 2558,
+          "y": 287.5
+        },
+        {
+          "x": 2558,
+          "y": 245
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "paralegalReviseTask"
+      }
+    },
+    {
+      "resourceId": "sid-A438437B-C07E-4591-B7B0-B591C79F0765",
+      "properties": {
+        "overrideid": "sid-A438437B-C07E-4591-B7B0-B591C79F0765",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "paralegalSetCaseOwner"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2569.5,
+          "y": 275
+        },
+        "upperLeft": {
+          "x": 2520.40625,
+          "y": 210
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 2532,
+          "y": 210
+        },
+        {
+          "x": 2532,
+          "y": 275
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "paralegalSetCaseOwner"
+      }
+    },
+    {
+      "resourceId": "sid-CD301997-6AC0-4870-8301-9FC1E1FDE61E",
+      "properties": {
+        "overrideid": "sid-CD301997-6AC0-4870-8301-9FC1E1FDE61E",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "paralegalReview"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2269.5,
+          "y": 405
+        },
+        "upperLeft": {
+          "x": 2220,
+          "y": 325
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2232,
+          "y": 325
+        },
+        {
+          "x": 2232,
+          "y": 405
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "paralegalReview"
+      }
+    },
+    {
+      "resourceId": "externalReview",
+      "properties": {
+        "overrideid": "externalReview",
+        "name": "External Review",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "callactivitycalledelement": "caseMgmtReview",
+        "callactivityinparameters": {
+          "inParameters": [
+            {
+              "source": "initiator",
+              "target": "initiator",
+              "sourceExpression": null
+            },
+            {
+              "source": null,
+              "target": "reviewName",
+              "sourceExpression": "External Review"
+            },
+            {
+              "source": null,
+              "target": "reviewKey",
+              "sourceExpression": "externalReview"
+            },
+            {
+              "source": null,
+              "target": "reviewFolderPath",
+              "sourceExpression": "Negotiate"
+            },
+            {
+              "source": null,
+              "target": "external",
+              "sourceExpression": "${true}"
+            }
+          ]
+        },
+        "callactivityoutparameters": {
+          "outParameters": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "CallActivity"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow12"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2435,
+          "y": 650
+        },
+        "upperLeft": {
+          "x": 2335,
+          "y": 590
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "deviate",
+      "properties": {
+        "overrideid": "deviate",
+        "name": "Request Deviation",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "callactivitycalledelement": "caseMgmtReview",
+        "callactivityinparameters": {
+          "inParameters": [
+            {
+              "source": "initiator",
+              "target": "initiator",
+              "sourceExpression": null
+            },
+            {
+              "source": null,
+              "target": "reviewName",
+              "sourceExpression": "Deviation"
+            },
+            {
+              "source": null,
+              "target": "reviewKey",
+              "sourceExpression": "internalReview"
+            },
+            {
+              "source": null,
+              "target": "setCaseFolderPermissions",
+              "sourceExpression": "${true}"
+            }
+          ]
+        },
+        "callactivityoutparameters": {
+          "outParameters": [
+            {
+              "source": "outcome",
+              "target": "deviationOutcome",
+              "sourceExpression": null
+            }
+          ]
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "CallActivity"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow13"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2435,
+          "y": 60
+        },
+        "upperLeft": {
+          "x": 2335,
+          "y": 0
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "flow13",
+      "properties": {
+        "overrideid": "flow13",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "deviateGw"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2739.96875,
+          "y": 235
+        },
+        "upperLeft": {
+          "x": 2435.53125,
+          "y": 30
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 2702,
+          "y": 30
+        },
+        {
+          "x": 2702,
+          "y": 235
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "deviateGw"
+      }
+    },
+    {
+      "resourceId": "deviateGw",
+      "properties": {
+        "overrideid": "deviateGw",
+        "name": "",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "sequencefloworder": "",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      },
+      "stencil": {
+        "id": "ExclusiveGateway"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "deviateFlow1"
+        },
+        {
+          "resourceId": "deviateFlow2"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2780,
+          "y": 255
+        },
+        "upperLeft": {
+          "x": 2740,
+          "y": 215
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "legalReviewJoin",
+      "properties": {
+        "overrideid": "legalReviewJoin",
+        "name": "",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "sequencefloworder": "",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      },
+      "stencil": {
+        "id": "InclusiveGateway"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow14"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2900,
+          "y": 475
+        },
+        "upperLeft": {
+          "x": 2860,
+          "y": 435
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "sign",
+      "properties": {
+        "overrideid": "sign",
+        "name": "Upload Signed Copy",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "callactivitycalledelement": "caseMgmtReview",
+        "callactivityinparameters": {
+          "inParameters": [
+            {
+              "source": "initiator",
+              "target": "initiator",
+              "sourceExpression": null
+            },
+            {
+              "source": null,
+              "target": "reviewName",
+              "sourceExpression": "Upload Signed Copy"
+            },
+            {
+              "source": null,
+              "target": "reviewKey",
+              "sourceExpression": "uploadSignedCopy"
+            },
+            {
+              "source": null,
+              "target": "skipFinishTask",
+              "sourceExpression": "${true}"
+            }
+          ]
+        },
+        "callactivityoutparameters": {
+          "outParameters": [
+            {
+              "source": "outcome",
+              "target": "signOutcome",
+              "sourceExpression": null
+            },
+            {
+              "source": "approvalCount",
+              "target": "signCount",
+              "sourceExpression": null
+            }
+          ]
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "CallActivity"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow15"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2435,
+          "y": 810
+        },
+        "upperLeft": {
+          "x": 2335,
+          "y": 750
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "signGw",
+      "properties": {
+        "overrideid": "signGw",
+        "name": "",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "sequencefloworder": "",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      },
+      "stencil": {
+        "id": "ExclusiveGateway"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "signFlow1"
+        },
+        {
+          "resourceId": "signFlow2"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2780,
+          "y": 695
+        },
+        "upperLeft": {
+          "x": 2740,
+          "y": 655
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "signFlow1",
+      "properties": {
+        "overrideid": "signFlow1",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": true
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalReviewJoin"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2859.75,
+          "y": 675
+        },
+        "upperLeft": {
+          "x": 2780,
+          "y": 455
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2792,
+          "y": 675
+        },
+        {
+          "x": 2792,
+          "y": 455
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "legalReviewJoin"
+      }
+    },
+    {
+      "resourceId": "executed",
+      "properties": {
+        "overrideid": "executed",
+        "name": "Executed",
+        "documentation": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "stencil": {
+        "id": "EndNoneEvent"
+      },
+      "childShapes": [],
+      "outgoing": [],
+      "bounds": {
+        "lowerRight": {
+          "x": 3008,
+          "y": 779
+        },
+        "upperLeft": {
+          "x": 2980,
+          "y": 751
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "cancelled",
+      "properties": {
+        "overrideid": "cancelled",
+        "name": "Cancelled",
+        "documentation": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "stencil": {
+        "id": "EndNoneEvent"
+      },
+      "childShapes": [],
+      "outgoing": [],
+      "bounds": {
+        "lowerRight": {
+          "x": 3008,
+          "y": 249
+        },
+        "upperLeft": {
+          "x": 2980,
+          "y": 221
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "setCaseStatusNew",
+      "properties": {
+        "scriptformat": "groovy",
+        "scripttext": "execution.setVariable('status', 'New');",
+        "executionvariables": "",
+        "overrideid": "setCaseStatusNew",
+        "name": "Set Status New",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "ScriptTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow0b"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 180,
+          "y": 537
+        },
+        "upperLeft": {
+          "x": 80,
+          "y": 477
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "flow0b",
+      "properties": {
+        "overrideid": "flow0b",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "newCaseTask"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 229.5,
+          "y": 510
+        },
+        "upperLeft": {
+          "x": 180.40625,
+          "y": 507
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 192,
+          "y": 507
+        },
+        {
+          "x": 192,
+          "y": 510
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "newCaseTask"
+      }
+    },
+    {
+      "resourceId": "flow0a",
+      "properties": {
+        "overrideid": "flow0a",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setCaseStatusNew"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 79.5859375,
+          "y": 507
+        },
+        "upperLeft": {
+          "x": 30.375,
+          "y": 507
+        }
+      },
+      "dockers": [
+        {
+          "x": 15,
+          "y": 15
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setCaseStatusNew"
+      }
+    },
+    {
+      "resourceId": "setAttorneyInitial",
+      "properties": {
+        "scriptformat": "groovy",
+        "scripttext": "execution.setVariable('caseOwner', 'julie.richards@acme.com');",
+        "executionvariables": "",
+        "overrideid": "setAttorneyInitial",
+        "name": "setCaseOwner",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "ScriptTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow2"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 570,
+          "y": 485
+        },
+        "upperLeft": {
+          "x": 470,
+          "y": 425
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "flow2",
+      "properties": {
+        "overrideid": "flow2",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setOwner"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 619.78125,
+          "y": 455
+        },
+        "upperLeft": {
+          "x": 570.21875,
+          "y": 455
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setOwner"
+      }
+    },
+    {
+      "resourceId": "setOwner",
+      "properties": {
+        "scriptformat": "groovy",
+        "scripttext": "// Do nothing",
+        "executionvariables": "",
+        "overrideid": "setOwner",
+        "name": "setCaseOwner",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "ScriptTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow3"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 720,
+          "y": 485
+        },
+        "upperLeft": {
+          "x": 620,
+          "y": 425
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "setCaseStatusLegalReview",
+      "properties": {
+        "scriptformat": "groovy",
+        "scripttext": "execution.setVariable('status', 'Legal Review');",
+        "executionvariables": "",
+        "overrideid": "setCaseStatusLegalReview",
+        "name": "Set Status Legal Review",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "ScriptTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow4a"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 870,
+          "y": 435
+        },
+        "upperLeft": {
+          "x": 770,
+          "y": 375
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "setCaseStatusCancelled",
+      "properties": {
+        "scriptformat": "groovy",
+        "scripttext": "execution.setVariable('status', 'Cancelled');",
+        "executionvariables": "",
+        "overrideid": "setCaseStatusCancelled",
+        "name": "Set Status Cancelled",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "ScriptTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "cancelFlow1"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2930,
+          "y": 266
+        },
+        "upperLeft": {
+          "x": 2830,
+          "y": 206
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "cancelFlow1",
+      "properties": {
+        "overrideid": "cancelFlow1",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "cancelled"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2980.531288471156,
+          "y": 235.55372840764173
+        },
+        "upperLeft": {
+          "x": 2930.874961528844,
+          "y": 235.11814659235827
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 14,
+          "y": 14
+        }
+      ],
+      "target": {
+        "resourceId": "cancelled"
+      }
+    },
+    {
+      "resourceId": "setCaseStatusExecuted",
+      "properties": {
+        "scriptformat": "groovy",
+        "scripttext": "execution.setVariable('status', 'Executed');",
+        "executionvariables": "",
+        "overrideid": "setCaseStatusExecuted",
+        "name": "Set Status Executed",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "ScriptTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "flow16"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2930,
+          "y": 796
+        },
+        "upperLeft": {
+          "x": 2830,
+          "y": 736
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "flow16",
+      "properties": {
+        "overrideid": "flow16",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "executed"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2980.531288471156,
+          "y": 765.5537284076418
+        },
+        "upperLeft": {
+          "x": 2930.874961528844,
+          "y": 765.1181465923582
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 14,
+          "y": 14
+        }
+      ],
+      "target": {
+        "resourceId": "executed"
+      }
+    },
+    {
+      "resourceId": "signFlow2",
+      "properties": {
+        "overrideid": "signFlow2",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "type": "static",
+            "staticValue": "${signOutcome == 'complete'}"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setCaseStatusExecuted"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2829.5,
+          "y": 766
+        },
+        "upperLeft": {
+          "x": 2780,
+          "y": 675
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2792,
+          "y": 675
+        },
+        {
+          "x": 2792,
+          "y": 766
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setCaseStatusExecuted"
+      }
+    },
+    {
+      "resourceId": "flow1a",
+      "properties": {
+        "overrideid": "flow1a",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "newGw"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 379.96875,
+          "y": 515
+        },
+        "upperLeft": {
+          "x": 330.40625,
+          "y": 510
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 342,
+          "y": 510
+        },
+        {
+          "x": 342,
+          "y": 515
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "newGw"
+      }
+    },
+    {
+      "resourceId": "deviateFlow1",
+      "properties": {
+        "overrideid": "deviateFlow1",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": true
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalReviewJoin"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2859.75,
+          "y": 455
+        },
+        "upperLeft": {
+          "x": 2780,
+          "y": 235
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2792,
+          "y": 235
+        },
+        {
+          "x": 2792,
+          "y": 455
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "legalReviewJoin"
+      }
+    },
+    {
+      "resourceId": "flow15",
+      "properties": {
+        "overrideid": "flow15",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "signGw"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2739.96875,
+          "y": 780
+        },
+        "upperLeft": {
+          "x": 2435.53125,
+          "y": 675
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 2702,
+          "y": 780
+        },
+        {
+          "x": 2702,
+          "y": 675
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "signGw"
+      }
+    },
+    {
+      "resourceId": "flow1c",
+      "properties": {
+        "overrideid": "flow1c",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "index": "0",
+            "outcomeFormId": "6",
+            "outcomeFormName": "Case Details",
+            "rightOutcomeName": "Bypass",
+            "operator": "==",
+            "type": "variables"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setCaseStatusExecuted"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2829.9921875,
+          "y": 766
+        },
+        "upperLeft": {
+          "x": 420,
+          "y": 515
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 432,
+          "y": 515
+        },
+        {
+          "x": 432,
+          "y": 766
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setCaseStatusExecuted"
+      }
+    },
+    {
+      "resourceId": "flow1b",
+      "properties": {
+        "overrideid": "flow1b",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "index": "0",
+            "outcomeFormId": "6",
+            "outcomeFormName": "Case Details",
+            "rightOutcomeName": "Send for Legal Review",
+            "operator": "==",
+            "type": "variables"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setAttorneyInitial"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 469.5,
+          "y": 515
+        },
+        "upperLeft": {
+          "x": 420,
+          "y": 455
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 432,
+          "y": 515
+        },
+        {
+          "x": 432,
+          "y": 455
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setAttorneyInitial"
+      }
+    },
+    {
+      "resourceId": "setAttorneyLegalReview",
+      "properties": {
+        "overrideid": "setAttorneyLegalReview",
+        "name": "Set Attorney",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false",
+        "decisiontaskdecisiontablereference": {
+          "id": 4,
+          "name": "Select Attorney Embedded"
+        }
+      },
+      "stencil": {
+        "id": "DecisionTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-53DEC25C-9329-4339-9762-752BD1F74FC2"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1020,
+          "y": 385
+        },
+        "upperLeft": {
+          "x": 920,
+          "y": 325
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "setPreviousAttorney",
+      "properties": {
+        "scriptformat": "groovy",
+        "scripttext": "execution.setVariable('previousCaseOwner', execution.getVariable('caseOwner'));",
+        "executionvariables": "",
+        "overrideid": "setPreviousAttorney",
+        "name": "Set Previous Attorney",
+        "documentation": "",
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false"
+      },
+      "stencil": {
+        "id": "ScriptTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-D890C8EA-D7A1-49CE-9738-B741B31EBD8C"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1170,
+          "y": 385
+        },
+        "upperLeft": {
+          "x": 1070,
+          "y": 325
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "flow8",
+      "properties": {
+        "overrideid": "flow8",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "index": "0",
+            "outcomeFormId": "8",
+            "outcomeFormName": "Legal Review",
+            "rightOutcomeName": "Request Deviation",
+            "operator": "==",
+            "type": "variables"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "deviate"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2334.42578125,
+          "y": 405
+        },
+        "upperLeft": {
+          "x": 2030,
+          "y": 30
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2042,
+          "y": 405
+        },
+        {
+          "x": 2042,
+          "y": 30.000000000000007
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "deviate"
+      }
+    },
+    {
+      "resourceId": "flow6",
+      "properties": {
+        "overrideid": "flow6",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "index": "0",
+            "outcomeFormId": "8",
+            "outcomeFormName": "Legal Review",
+            "rightOutcomeName": "Send to Paralegal",
+            "operator": "==",
+            "type": "variables"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "paralegalSubProcess"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2079.630859375,
+          "y": 405
+        },
+        "upperLeft": {
+          "x": 2030.125,
+          "y": 325
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2044,
+          "y": 405
+        },
+        {
+          "x": 2044,
+          "y": 325.00000000000006
+        },
+        {
+          "x": 305,
+          "y": 165
+        }
+      ],
+      "target": {
+        "resourceId": "paralegalSubProcess"
+      }
+    },
+    {
+      "resourceId": "flow10",
+      "properties": {
+        "overrideid": "flow10",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "index": "0",
+            "outcomeFormId": "8",
+            "outcomeFormName": "Legal Review",
+            "rightOutcomeName": "Send to Customer",
+            "operator": "==",
+            "type": "variables"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "externalReview"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2334.71484375,
+          "y": 620
+        },
+        "upperLeft": {
+          "x": 2030.125,
+          "y": 405
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2044,
+          "y": 405
+        },
+        {
+          "x": 2044,
+          "y": 620
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "externalReview"
+      }
+    },
+    {
+      "resourceId": "flow9",
+      "properties": {
+        "overrideid": "flow9",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "index": "0",
+            "outcomeFormId": "8",
+            "outcomeFormName": "Legal Review",
+            "rightOutcomeName": "Send for Signature",
+            "operator": "==",
+            "type": "variables"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sign"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2334.42578125,
+          "y": 780
+        },
+        "upperLeft": {
+          "x": 2030,
+          "y": 405
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2042,
+          "y": 405
+        },
+        {
+          "x": 2042,
+          "y": 780
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "sign"
+      }
+    },
+    {
+      "resourceId": "flow10a",
+      "properties": {
+        "overrideid": "flow10a",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "index": "0",
+            "outcomeFormId": "7",
+            "outcomeFormName": "Update Contract Form",
+            "rightOutcomeName": "Update Contract",
+            "operator": "==",
+            "type": "variables"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setOwner"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1990,
+          "y": 455
+        },
+        "upperLeft": {
+          "x": 720.81640625,
+          "y": 405
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 1978,
+          "y": 405
+        },
+        {
+          "x": 1978,
+          "y": 455
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setOwner"
+      }
+    },
+    {
+      "resourceId": "flow11",
+      "properties": {
+        "overrideid": "flow11",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalReviewJoin"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2859.53125,
+          "y": 455
+        },
+        "upperLeft": {
+          "x": 2690.6171875,
+          "y": 325
+        }
+      },
+      "dockers": [
+        {
+          "x": 305,
+          "y": 165
+        },
+        {
+          "x": 2702,
+          "y": 325
+        },
+        {
+          "x": 2702,
+          "y": 455
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "legalReviewJoin"
+      }
+    },
+    {
+      "resourceId": "flow12",
+      "properties": {
+        "overrideid": "flow12",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalReviewJoin"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2859.53125,
+          "y": 620
+        },
+        "upperLeft": {
+          "x": 2435.53125,
+          "y": 455
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 2702,
+          "y": 620
+        },
+        {
+          "x": 2702,
+          "y": 455
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "legalReviewJoin"
+      }
+    },
+    {
+      "resourceId": "deviateFlow2",
+      "properties": {
+        "overrideid": "deviateFlow2",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": {
+          "expression": {
+            "type": "static",
+            "staticValue": "${execution.hasVariable('signCount') || empty signCount}"
+          }
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setCaseStatusCancelled"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2829.5,
+          "y": 236
+        },
+        "upperLeft": {
+          "x": 2780,
+          "y": 235
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2792,
+          "y": 235
+        },
+        {
+          "x": 2792,
+          "y": 236
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setCaseStatusCancelled"
+      }
+    },
+    {
+      "resourceId": "flow14",
+      "properties": {
+        "overrideid": "flow14",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setCaseStatusLegalReview"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 2861.0077221232864,
+          "y": 463
+        },
+        "upperLeft": {
+          "x": 870.705078125,
+          "y": 405
+        }
+      },
+      "dockers": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 2816,
+          "y": 463
+        },
+        {
+          "x": 2816,
+          "y": 405
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setCaseStatusLegalReview"
+      }
+    },
+    {
+      "resourceId": "sid-D890C8EA-D7A1-49CE-9738-B741B31EBD8C",
+      "properties": {
+        "overrideid": "sid-D890C8EA-D7A1-49CE-9738-B741B31EBD8C",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "legalSubprocess"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1219.8671875,
+          "y": 355.00000000000006
+        },
+        "upperLeft": {
+          "x": 1170.40625,
+          "y": 355
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 1182,
+          "y": 355
+        },
+        {
+          "x": 1182,
+          "y": 355.00000000000006
+        },
+        {
+          "x": 360,
+          "y": 140
+        }
+      ],
+      "target": {
+        "resourceId": "legalSubprocess"
+      }
+    },
+    {
+      "resourceId": "sid-53DEC25C-9329-4339-9762-752BD1F74FC2",
+      "properties": {
+        "overrideid": "sid-53DEC25C-9329-4339-9762-752BD1F74FC2",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setPreviousAttorney"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1069.78125,
+          "y": 355
+        },
+        "upperLeft": {
+          "x": 1020.21875,
+          "y": 355
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setPreviousAttorney"
+      }
+    },
+    {
+      "resourceId": "flow3",
+      "properties": {
+        "overrideid": "flow3",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setCaseStatusLegalReview"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 769.5,
+          "y": 444.84142632227355
+        },
+        "upperLeft": {
+          "x": 720.3865254415233,
+          "y": 405
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 732,
+          "y": 442.5
+        },
+        {
+          "x": 732,
+          "y": 405
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setCaseStatusLegalReview"
+      }
+    },
+    {
+      "resourceId": "flow4a",
+      "properties": {
+        "overrideid": "flow4a",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setAttorneyLegalReview"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 919.5,
+          "y": 394.84142632227355
+        },
+        "upperLeft": {
+          "x": 870.3865254415233,
+          "y": 355
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 882,
+          "y": 392.5
+        },
+        {
+          "x": 882,
+          "y": 355
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setAttorneyLegalReview"
+      }
+    },
+    {
+      "resourceId": "sid-43E05ACF-C207-4E99-8A44-914A000F4D26",
+      "properties": {
+        "overrideid": "sid-43E05ACF-C207-4E99-8A44-914A000F4D26",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "reassignTaskGw"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1709.96875,
+          "y": 315
+        },
+        "upperLeft": {
+          "x": 1660.40625,
+          "y": 265
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 1672,
+          "y": 265
+        },
+        {
+          "x": 1672,
+          "y": 315
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "reassignTaskGw"
+      }
+    },
+    {
+      "resourceId": "flow7837328",
+      "properties": {
+        "overrideid": "flow7837328",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": "false"
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "setAttorneyParalegal"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 1559.5,
+          "y": 274.84142632227355
+        },
+        "upperLeft": {
+          "x": 1510.3865254415232,
+          "y": 265
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 30
+        },
+        {
+          "x": 1522,
+          "y": 272.5
+        },
+        {
+          "x": 1522,
+          "y": 265
+        },
+        {
+          "x": 50,
+          "y": 30
+        }
+      ],
+      "target": {
+        "resourceId": "setAttorneyParalegal"
+      }
+    }
+  ],
+  "bounds": {
+    "lowerRight": {
+      "x": 3110,
+      "y": 1050
+    },
+    "upperLeft": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "stencilset": {
+    "url": "stencilsets/bpmn2.0/bpmn2.0.json",
+    "namespace": "http://b3mn.org/stencilset/bpmn2.0#"
+  },
+  "ssextensions": []
+}

@@ -1,0 +1,1422 @@
+{
+  "bounds": {
+    "lowerRight": {
+      "x": 3148.0,
+      "y": 700.0
+    },
+    "upperLeft": {
+      "x": 0.0,
+      "y": 0.0
+    }
+  },
+  "resourceId": "canvas",
+  "stencil": {
+    "id": "BPMNDiagram"
+  },
+  "stencilset": {
+    "namespace": "http://b3mn.org/stencilset/bpmn2.0#",
+    "url": "../editor/stencilsets/bpmn2.0/bpmn2.0.json"
+  },
+  "properties": {
+    "process_id": "caseMgmtReview",
+    "name": "Case Management Review",
+    "executionlisteners": {
+      "executionListeners": []
+    },
+    "eventlisteners": {
+      "eventListeners": []
+    },
+    "signaldefinitions": [],
+    "messagedefinitions": [],
+    "executionvariables": [
+      {
+        "variableName": "outcome",
+        "variableType": "string"
+      }
+    ],
+    "process_namespace": "http://www.activiti.org/processdef"
+  },
+  "childShapes": [
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 30.0,
+          "y": 302.0
+        },
+        "upperLeft": {
+          "x": 0.0,
+          "y": 272.0
+        }
+      },
+      "resourceId": "startevent1",
+      "childShapes": [],
+      "stencil": {
+        "id": "StartNoneEvent"
+      },
+      "properties": {
+        "overrideid": "startevent1",
+        "name": "Start",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "outgoing": [
+        {
+          "resourceId": "flow1a"
+        }
+      ]
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 330.0,
+          "y": 315.0
+        },
+        "upperLeft": {
+          "x": 230.0,
+          "y": 255.0
+        }
+      },
+      "resourceId": "setupTask",
+      "childShapes": [],
+      "stencil": {
+        "id": "UserTask"
+      },
+      "properties": {
+        "overrideid": "setupTask",
+        "name": "Manage ${reviewName}",
+        "usertasksendemail": true,
+        "usertaskassignment": {
+          "assignment": {
+            "type": "static",
+            "assignee": "$INITIATOR"
+          }
+        },
+        "formreference": {
+          "id": 10,
+          "name": "Subreview Start"
+        },
+        "duedatedefinition": {
+          "duedateExpression": "P3D"
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "tasklisteners": {
+          "taskListeners": [
+            {
+              "event": "complete",
+              "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+              "fields": [
+                {
+                  "name": "script",
+                  "stringValue": "task.setVariable('outcome', task.getVariable('form10outcome'))"
+                },
+                {
+                  "name": "language",
+                  "stringValue": "groovy"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "outgoing": [
+        {
+          "resourceId": "flowSetup"
+        }
+      ]
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "flowSetup",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 50.0,
+          "y": 30.0
+        },
+        {
+          "x": 342.0,
+          "y": 285.0
+        },
+        {
+          "x": 342.0,
+          "y": 281.0
+        },
+        {
+          "x": 20.0,
+          "y": 20.0
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "setupGw"
+        }
+      ],
+      "target": {
+        "resourceId": "setupGw"
+      },
+      "properties": {
+        "overrideid": "flowSetup",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      }
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 420.0,
+          "y": 301.0
+        },
+        "upperLeft": {
+          "x": 380.0,
+          "y": 261.0
+        }
+      },
+      "resourceId": "setupGw",
+      "childShapes": [],
+      "stencil": {
+        "id": "ExclusiveGateway"
+      },
+      "properties": {
+        "overrideid": "setupGw",
+        "name": "Exclusive Setup Gateway",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "outgoing": [
+        {
+          "resourceId": "flowSetupb"
+        },
+        {
+          "resourceId": "sid-2CDC8022-CAEB-4624-8D96-04153CC7A574"
+        }
+      ]
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 2630.0,
+          "y": 586.0
+        },
+        "upperLeft": {
+          "x": 1490.0,
+          "y": 99.0
+        }
+      },
+      "resourceId": "approvalSubprocess",
+      "childShapes": [
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 50.0,
+              "y": 291.0
+            },
+            "upperLeft": {
+              "x": 20.0,
+              "y": 261.0
+            }
+          },
+          "resourceId": "approvalSubprocessStart",
+          "childShapes": [],
+          "stencil": {
+            "id": "StartNoneEvent"
+          },
+          "properties": {
+            "overrideid": "approvalSubprocessStart",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true
+          },
+          "outgoing": [
+            {
+              "resourceId": "approvalSubprocess1"
+            }
+          ]
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 140.0,
+              "y": 296.0
+            },
+            "upperLeft": {
+              "x": 100.0,
+              "y": 256.0
+            }
+          },
+          "resourceId": "approvalSubprocessParallelGw1",
+          "childShapes": [],
+          "stencil": {
+            "id": "ParallelGateway"
+          },
+          "properties": {
+            "overrideid": "approvalSubprocessParallelGw1",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true
+          },
+          "outgoing": [
+            {
+              "resourceId": "approvalSubprocess3"
+            },
+            {
+              "resourceId": "approvalSubprocess2"
+            }
+          ]
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 290.0,
+              "y": 218.0
+            },
+            "upperLeft": {
+              "x": 190.0,
+              "y": 158.0
+            }
+          },
+          "resourceId": "approvalTask",
+          "childShapes": [],
+          "stencil": {
+            "id": "UserTask"
+          },
+          "properties": {
+            "overrideid": "approvalTask",
+            "name": "${reviewName}",
+            "usertasksendemail": true,
+            "usertaskassignment": {
+              "assignment": {
+                "type": "idm",
+                "idm": {
+                  "assigneeField": {
+                    "id": "selectreviewer",
+                    "name": "Select Reviewer"
+                  },
+                  "type": "user"
+                },
+                "initiatorCanCompleteTask": true
+              }
+            },
+            "formreference": {
+              "id": 9,
+              "name": "Sub Review"
+            },
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "tasklisteners": {
+              "taskListeners": [
+                {
+                  "event": "create",
+                  "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+                  "fields": [
+                    {
+                      "name": "script",
+                      "stringValue": "task.setVariable('originalSubject', task.getVariable('subject'))\n              task.setVariable('originalMessage', task.getVariable('message'))"
+                    },
+                    {
+                      "name": "language",
+                      "stringValue": "JavaScript"
+                    }
+                  ]
+                },
+                {
+                  "event": "complete",
+                  "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+                  "fields": [
+                    {
+                      "name": "script",
+                      "stringValue": "// Approval count\n                      var approvalCount = task.getVariable('approvalCount');\n                      if (!approvalCount) {\n                        approvalCount = new java.lang.Integer(0)\n                        task.setVariable('approvalCount', approvalCount);\n                      }\n\n                      // Total approval count\n                      var nrOfFinishedApprovals = task.getVariable('nrOfFinishedApprovals');\n                      if (!nrOfFinishedApprovals) {\n                        nrOfFinishedApprovals = new java.lang.Integer(0);\n                      }\n                      task.setVariable('nrOfFinishedApprovals', new java.lang.Integer(nrOfFinishedApprovals + 1));\n\n                      // Update category based on outcome\n                      var outcome = task.getVariable('form9outcome'), action;\n                      if (outcome == 'Approve' || outcome == 'Complete') {\n                         task.setVariable('approvalCount', new java.lang.Integer(approvalCount + 1));\n                         task.setCategory('approved');\n                         action = outcome == 'Approve' ? 'approved' : 'completed';\n                      } else {\n                         task.setCategory('rejected');\n                         action = 'rejected';\n                      }\n                      task.setVariableLocal('submitOutcomeMessage', task.getVariable('reviewName') + ' ' + action + ' for contract');"
+                    },
+                    {
+                      "name": "language",
+                      "stringValue": "JavaScript"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "outgoing": [
+            {
+              "resourceId": "approvalSubprocess5"
+            }
+          ]
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 290.0,
+              "y": 385.0
+            },
+            "upperLeft": {
+              "x": 190.0,
+              "y": 325.0
+            }
+          },
+          "resourceId": "cancelApprovalTask",
+          "childShapes": [],
+          "stencil": {
+            "id": "UserTask"
+          },
+          "properties": {
+            "overrideid": "cancelApprovalTask",
+            "name": "Manage ${reviewName}",
+            "usertasksendemail": true,
+            "usertaskassignment": {
+              "assignment": {
+                "type": "static",
+                "assignee": "$INITIATOR"
+              }
+            },
+            "formreference": {
+              "id": 12,
+              "name": "Manage Sub Review"
+            },
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true,
+            "tasklisteners": {
+              "taskListeners": [
+                {
+                  "event": "complete",
+                  "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+                  "fields": [
+                    {
+                      "name": "script",
+                      "stringValue": "//task.setVariable('outcome', task.getVariable('form12outcome'))"
+                    },
+                    {
+                      "name": "language",
+                      "stringValue": "groovy"
+                    }
+                  ]
+                },
+                {
+                  "event": "complete",
+                  "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+                  "fields": [
+                    {
+                      "name": "script",
+                      "stringValue": "/*var outcome = task.getVariable('form12outcome');\n                      if (outcome == 'Complete Early') {\n                         task.setCategory('cancellation');\n                         task.setVariable('cancelled', true);\n                      } else if (outcome == 'Recall') {\n                         task.setCategory('abort');\n                         task.setVariable('aborted', true);\n                      } else if (outcome == 'Send Reminders') {\n                        task.setVariableLocal('submitOutcomeMessage', 'Reminder emails have been sent to all remaining reviewers');\n                      } else if (outcome == 'Cancel Contract') {\n                        task.setVariableLocal('submitOutcomeMessage', 'Contract cancelled');\n                      }*/"
+                    },
+                    {
+                      "name": "language",
+                      "stringValue": "JavaScript"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "outgoing": [
+            {
+              "resourceId": "approvalSubprocess6"
+            }
+          ]
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 410.0,
+              "y": 330.0
+            },
+            "upperLeft": {
+              "x": 370.0,
+              "y": 290.0
+            }
+          },
+          "resourceId": "completeRecallGateway",
+          "childShapes": [],
+          "stencil": {
+            "id": "ExclusiveGateway"
+          },
+          "properties": {
+            "overrideid": "completeRecallGateway",
+            "name": "Complete or Recall Gateway",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true
+          },
+          "outgoing": [
+            {
+              "resourceId": "cancelContractFlow1"
+            },
+            {
+              "resourceId": "completeFlow"
+            }
+          ]
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 1118.0,
+              "y": 293.0
+            },
+            "upperLeft": {
+              "x": 1090.0,
+              "y": 265.0
+            }
+          },
+          "resourceId": "approvalSubprocessEnd",
+          "childShapes": [],
+          "stencil": {
+            "id": "EndTerminateEvent"
+          },
+          "properties": {
+            "overrideid": "approvalSubprocessEnd",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "asynchronousdefinition": false,
+            "exclusivedefinition": true
+          },
+          "outgoing": []
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 172.0,
+              "y": 212.0
+            },
+            "upperLeft": {
+              "x": 128.0,
+              "y": 212.0
+            }
+          },
+          "resourceId": "approvalSubprocess1",
+          "childShapes": [],
+          "stencil": {
+            "id": "SequenceFlow"
+          },
+          "dockers": [
+            {
+              "x": 15.0,
+              "y": 15.0
+            },
+            {
+              "x": 20.0,
+              "y": 20.0
+            }
+          ],
+          "outgoing": [
+            {
+              "resourceId": "approvalSubprocessParallelGw1"
+            }
+          ],
+          "target": {
+            "resourceId": "approvalSubprocessParallelGw1"
+          },
+          "properties": {
+            "overrideid": "approvalSubprocess1",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          }
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 172.0,
+              "y": 212.0
+            },
+            "upperLeft": {
+              "x": 128.0,
+              "y": 212.0
+            }
+          },
+          "resourceId": "approvalSubprocess6",
+          "childShapes": [],
+          "stencil": {
+            "id": "SequenceFlow"
+          },
+          "dockers": [
+            {
+              "x": 50.0,
+              "y": 30.0
+            },
+            {
+              "x": 1792.0,
+              "y": 441.0
+            },
+            {
+              "x": 1792.0,
+              "y": 409.0
+            },
+            {
+              "x": 20.0,
+              "y": 20.0
+            }
+          ],
+          "outgoing": [
+            {
+              "resourceId": "completeRecallGateway"
+            }
+          ],
+          "target": {
+            "resourceId": "completeRecallGateway"
+          },
+          "properties": {
+            "overrideid": "approvalSubprocess6",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          }
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 172.0,
+              "y": 212.0
+            },
+            "upperLeft": {
+              "x": 128.0,
+              "y": 212.0
+            }
+          },
+          "resourceId": "cancelContractFlow1",
+          "childShapes": [],
+          "stencil": {
+            "id": "SequenceFlow"
+          },
+          "dockers": [
+            {
+              "x": 20.0,
+              "y": 20.0
+            },
+            {
+              "x": 1944.0,
+              "y": 409.0
+            },
+            {
+              "x": 1944.0,
+              "y": 379.0
+            },
+            {
+              "x": 14.0,
+              "y": 14.0
+            }
+          ],
+          "outgoing": [
+            {
+              "resourceId": "approvalSubprocessEnd"
+            }
+          ],
+          "target": {
+            "resourceId": "approvalSubprocessEnd"
+          },
+          "properties": {
+            "overrideid": "cancelContractFlow1",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "conditionsequenceflow": {
+              "expression": {
+                "type": "static",
+                "staticValue": "${execution.hasVariable('form12outcome') && form12outcome == 'Cancel Contract'}"
+              }
+            }
+          }
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 172.0,
+              "y": 212.0
+            },
+            "upperLeft": {
+              "x": 128.0,
+              "y": 212.0
+            }
+          },
+          "resourceId": "approvalSubprocess5",
+          "childShapes": [],
+          "stencil": {
+            "id": "SequenceFlow"
+          },
+          "dockers": [
+            {
+              "x": 50.0,
+              "y": 30.0
+            },
+            {
+              "x": 1942.0,
+              "y": 287.0
+            },
+            {
+              "x": 1942.0,
+              "y": 379.0
+            },
+            {
+              "x": 14.0,
+              "y": 14.0
+            }
+          ],
+          "outgoing": [
+            {
+              "resourceId": "approvalSubprocessEnd"
+            }
+          ],
+          "target": {
+            "resourceId": "approvalSubprocessEnd"
+          },
+          "properties": {
+            "overrideid": "approvalSubprocess5",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          }
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 172.0,
+              "y": 212.0
+            },
+            "upperLeft": {
+              "x": 128.0,
+              "y": 212.0
+            }
+          },
+          "resourceId": "completeFlow",
+          "childShapes": [],
+          "stencil": {
+            "id": "SequenceFlow"
+          },
+          "dockers": [
+            {
+              "x": 20.0,
+              "y": 20.0
+            },
+            {
+              "x": 1944.0,
+              "y": 409.0
+            },
+            {
+              "x": 1944.0,
+              "y": 379.0
+            },
+            {
+              "x": 14.0,
+              "y": 14.0
+            }
+          ],
+          "outgoing": [
+            {
+              "resourceId": "approvalSubprocessEnd"
+            }
+          ],
+          "target": {
+            "resourceId": "approvalSubprocessEnd"
+          },
+          "properties": {
+            "overrideid": "completeFlow",
+            "executionlisteners": {
+              "executionListeners": []
+            },
+            "defaultflow": true
+          }
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 172.0,
+              "y": 212.0
+            },
+            "upperLeft": {
+              "x": 128.0,
+              "y": 212.0
+            }
+          },
+          "resourceId": "approvalSubprocess3",
+          "childShapes": [],
+          "stencil": {
+            "id": "SequenceFlow"
+          },
+          "dockers": [
+            {
+              "x": 20.0,
+              "y": 20.0
+            },
+            {
+              "x": 1642.0,
+              "y": 375.0
+            },
+            {
+              "x": 1642.0,
+              "y": 454.0
+            },
+            {
+              "x": 50.0,
+              "y": 30.0
+            }
+          ],
+          "outgoing": [
+            {
+              "resourceId": "cancelApprovalTask"
+            }
+          ],
+          "target": {
+            "resourceId": "cancelApprovalTask"
+          },
+          "properties": {
+            "overrideid": "approvalSubprocess3",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          }
+        },
+        {
+          "bounds": {
+            "lowerRight": {
+              "x": 172.0,
+              "y": 212.0
+            },
+            "upperLeft": {
+              "x": 128.0,
+              "y": 212.0
+            }
+          },
+          "resourceId": "approvalSubprocess2",
+          "childShapes": [],
+          "stencil": {
+            "id": "SequenceFlow"
+          },
+          "dockers": [
+            {
+              "x": 20.0,
+              "y": 20.0
+            },
+            {
+              "x": 1642.0,
+              "y": 375.0
+            },
+            {
+              "x": 1642.0,
+              "y": 287.0
+            },
+            {
+              "x": 50.0,
+              "y": 30.0
+            }
+          ],
+          "outgoing": [
+            {
+              "resourceId": "approvalTask"
+            }
+          ],
+          "target": {
+            "resourceId": "approvalTask"
+          },
+          "properties": {
+            "overrideid": "approvalSubprocess2",
+            "executionlisteners": {
+              "executionListeners": []
+            }
+          }
+        }
+      ],
+      "stencil": {
+        "id": "SubProcess"
+      },
+      "properties": {
+        "overrideid": "approvalSubprocess",
+        "name": "Approval Subprocess",
+        "activitytype": "Sub-Process",
+        "subprocesstype": "Embedded",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "outgoing": [
+        {
+          "resourceId": "flow2a"
+        }
+      ]
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "flow2a",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 570.0,
+          "y": 243.5
+        },
+        {
+          "x": 2647.0,
+          "y": 353.0
+        },
+        {
+          "x": 20.0,
+          "y": 20.0
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "finishOrCancelledGateway"
+        }
+      ],
+      "target": {
+        "resourceId": "finishOrCancelledGateway"
+      },
+      "properties": {
+        "overrideid": "flow2a",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      }
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 2870.0,
+          "y": 373.0
+        },
+        "upperLeft": {
+          "x": 2830.0,
+          "y": 333.0
+        }
+      },
+      "resourceId": "finishOrCancelledGateway",
+      "childShapes": [],
+      "stencil": {
+        "id": "ExclusiveGateway"
+      },
+      "properties": {
+        "overrideid": "finishOrCancelledGateway",
+        "name": "Exclusive Gateway - Finish or Cancel Contract",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "outgoing": [
+        {
+          "resourceId": "finishOrCancelledFlow1"
+        },
+        {
+          "resourceId": "finishOrCancelledFlow2"
+        }
+      ]
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "finishOrCancelledFlow1",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 20.0,
+          "y": 20.0
+        },
+        {
+          "x": 2882.0,
+          "y": 353.0
+        },
+        {
+          "x": 2882.0,
+          "y": 429.0
+        },
+        {
+          "x": 50.0,
+          "y": 30.0
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "finishReviewTask"
+        }
+      ],
+      "target": {
+        "resourceId": "finishReviewTask"
+      },
+      "properties": {
+        "overrideid": "finishOrCancelledFlow1",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": true
+      }
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 3016.6665507687508,
+          "y": 459.99998410542867
+        },
+        "upperLeft": {
+          "x": 2916.6665507687508,
+          "y": 399.99998410542867
+        }
+      },
+      "resourceId": "finishReviewTask",
+      "childShapes": [],
+      "stencil": {
+        "id": "UserTask"
+      },
+      "properties": {
+        "overrideid": "finishReviewTask",
+        "name": "Manage ${reviewName}",
+        "usertasksendemail": true,
+        "usertaskassignment": {
+          "assignment": {
+            "type": "static",
+            "assignee": "$INITIATOR"
+          }
+        },
+        "formreference": {
+          "id": 11,
+          "name": "Finish Sub Review"
+        },
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true,
+        "tasklisteners": {
+          "taskListeners": [
+            {
+              "event": "complete",
+              "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+              "fields": [
+                {
+                  "name": "script",
+                  "stringValue": "//task.setVariable('outcome', task.getVariable('form11outcome'))"
+                },
+                {
+                  "name": "language",
+                  "stringValue": "groovy"
+                }
+              ]
+            },
+            {
+              "event": "complete",
+              "className": "org.activiti.engine.impl.bpmn.listener.ScriptTaskListener",
+              "fields": [
+                {
+                  "name": "script",
+                  "stringValue": "//if (form11outcome == 'Cancel Contract') {\n                //task.setVariableLocal('submitOutcomeMessage', 'Contract cancelled');\n              //}"
+                },
+                {
+                  "name": "language",
+                  "stringValue": "JavaScript"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "outgoing": [
+        {
+          "resourceId": "flow2c"
+        }
+      ]
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "flow2c",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 50.0,
+          "y": 30.0
+        },
+        {
+          "x": 3084.0,
+          "y": 429.0
+        },
+        {
+          "x": 14.0,
+          "y": 14.0
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "endEvent"
+        }
+      ],
+      "target": {
+        "resourceId": "endEvent"
+      },
+      "properties": {
+        "overrideid": "flow2c",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      }
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 3098.0,
+          "y": 306.0
+        },
+        "upperLeft": {
+          "x": 3070.0,
+          "y": 278.0
+        }
+      },
+      "resourceId": "endEvent",
+      "childShapes": [],
+      "stencil": {
+        "id": "EndNoneEvent"
+      },
+      "properties": {
+        "overrideid": "endEvent",
+        "name": "End",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "outgoing": []
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 186.0,
+          "y": 327.0
+        },
+        "upperLeft": {
+          "x": 86.0,
+          "y": 247.0
+        }
+      },
+      "resourceId": "setCaseStatus",
+      "childShapes": [],
+      "stencil": {
+        "id": "ScriptTask"
+      },
+      "properties": {
+        "overrideid": "setCaseStatus",
+        "name": "Set Status",
+        "scriptformat": "groovy",
+        "scripttext": "execution.setVariable('status', execution.getVariable('reviewName'));",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "asynchronousdefinition": false,
+        "exclusivedefinition": true
+      },
+      "outgoing": [
+        {
+          "resourceId": "flow1b"
+        }
+      ]
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "flow1a",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 15.0,
+          "y": 15.0
+        },
+        {
+          "x": 50.0,
+          "y": 40.0
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "setCaseStatus"
+        }
+      ],
+      "target": {
+        "resourceId": "setCaseStatus"
+      },
+      "properties": {
+        "overrideid": "flow1a",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      }
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "flow1b",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 50.0,
+          "y": 40.0
+        },
+        {
+          "x": 192.0,
+          "y": 287.0
+        },
+        {
+          "x": 192.0,
+          "y": 285.0
+        },
+        {
+          "x": 50.0,
+          "y": 30.0
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "setupTask"
+        }
+      ],
+      "target": {
+        "resourceId": "setupTask"
+      },
+      "properties": {
+        "overrideid": "flow1b",
+        "executionlisteners": {
+          "executionListeners": []
+        }
+      }
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "finishOrCancelledFlow2",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 20.0,
+          "y": 20.0
+        },
+        {
+          "x": 2882.0,
+          "y": 353.0
+        },
+        {
+          "x": 2882.0,
+          "y": 293.0
+        },
+        {
+          "x": 14.0,
+          "y": 14.0
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "endEvent"
+        }
+      ],
+      "target": {
+        "resourceId": "endEvent"
+      },
+      "properties": {
+        "overrideid": "finishOrCancelledFlow2",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "conditionsequenceflow": {
+          "expression": {
+            "type": "static",
+            "staticValue": "${execution.hasVariable('form12outcome') && form12outcome == 'Cancel Contract' || execution.hasVariable('skipFinishTask') && skipFinishTask == true}"
+          }
+        }
+      }
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "flowSetupb",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 20.0,
+          "y": 20.0
+        },
+        {
+          "x": 14.0,
+          "y": 14.0
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "endEvent"
+        }
+      ],
+      "target": {
+        "resourceId": "endEvent"
+      },
+      "properties": {
+        "overrideid": "flowSetupb",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "conditionsequenceflow": {
+          "expression": {
+            "index": "0",
+            "outcomeFormId": "10",
+            "outcomeFormName": "Sub Review",
+            "rightOutcomeName": "Cancel Review",
+            "operator": "==",
+            "type": "variables"
+          }
+        }
+      }
+    },
+    {
+      "bounds": {
+        "lowerRight": {
+          "x": 172.0,
+          "y": 212.0
+        },
+        "upperLeft": {
+          "x": 128.0,
+          "y": 212.0
+        }
+      },
+      "resourceId": "sid-2CDC8022-CAEB-4624-8D96-04153CC7A574",
+      "childShapes": [],
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "dockers": [
+        {
+          "x": 20.0,
+          "y": 20.0
+        },
+        {
+          "x": 400.0,
+          "y": 342.0
+        },
+        {
+          "x": 570.0,
+          "y": 243.5
+        }
+      ],
+      "outgoing": [
+        {
+          "resourceId": "approvalSubprocess"
+        }
+      ],
+      "target": {
+        "resourceId": "approvalSubprocess"
+      },
+      "properties": {
+        "overrideid": "sid-2CDC8022-CAEB-4624-8D96-04153CC7A574",
+        "executionlisteners": {
+          "executionListeners": []
+        },
+        "defaultflow": true
+      }
+    }
+  ]
+}

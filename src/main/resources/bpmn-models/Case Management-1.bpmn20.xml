@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef" xmlns:modeler="http://activiti.com/modeler" modeler:version="1.0en" modeler:exportDateTime="20151127142441889" modeler:modelId="4" modeler:modelVersion="12" modeler:modelLastUpdated="1448634256940">
+  <process id="caseMgmt" name="Case Management" isExecutable="true">
+    <extensionElements>
+      <modeler:executionvariables xmlns:modeler="http://activiti.com/modeler" modeler:variableName="location" modeler:variableType="string"/>
+      <modeler:executionvariables xmlns:modeler="http://activiti.com/modeler" modeler:variableName="amount" modeler:variableType="integer"/>
+    </extensionElements>
+    <startEvent id="startevent" name="Start"/>
+    <userTask id="newCaseTask" name="New Contract" activiti:assignee="$INITIATOR" activiti:formKey="6">
+      <extensionElements>
+        <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+          <activiti:field name="script">
+            <activiti:string><![CDATA[task.setVariableLocal('submitOutcomeAction', 'return');]]></activiti:string>
+          </activiti:field>
+          <activiti:field name="language">
+            <activiti:string><![CDATA[JavaScript]]></activiti:string>
+          </activiti:field>
+        </activiti:taskListener>
+        <modeler:allow-send-email>true</modeler:allow-send-email>
+        <modeler:form-reference-id>6</modeler:form-reference-id>
+        <modeler:form-reference-name>Case Details</modeler:form-reference-name>
+        <modeler:activiti-idm-initiator>true</modeler:activiti-idm-initiator>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="newGw" name="Exclusive Gateway">
+    </exclusiveGateway>
+    <subProcess id="legalSubprocess" name="Legal Review Subprocess">
+      <startEvent id="legalSubProcessStart"/>
+      <parallelGateway id="legalSubProcessSplit"/>
+      <userTask id="legalReviewTask" name="Legal Review" activiti:assignee="$INITIATOR" activiti:formKey="8">
+        <extensionElements>
+          <activiti:formProperty id="outcome" type="string"/>
+          <activiti:formProperty id="paralegal" type="string"/>
+          <modeler:allow-send-email>true</modeler:allow-send-email>
+          <modeler:form-reference-id>8</modeler:form-reference-id>
+          <modeler:form-reference-name>Legal Review</modeler:form-reference-name>
+          <modeler:initiator-can-complete>true</modeler:initiator-can-complete>
+        </extensionElements>
+      </userTask>
+      <userTask id="reassignTask" name="Update Contract" activiti:assignee="$INITIATOR" activiti:formKey="7">
+        <extensionElements>
+          <activiti:formProperty id="outcome" type="string"/>
+          <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+            <activiti:field name="script">
+              <activiti:string><![CDATA[task.setVariableLocal('submitOutcomeAction', 'return');]]></activiti:string>
+            </activiti:field>
+            <activiti:field name="language">
+              <activiti:string><![CDATA[JavaScript]]></activiti:string>
+            </activiti:field>
+          </activiti:taskListener>
+          <modeler:allow-send-email>true</modeler:allow-send-email>
+          <modeler:form-reference-id>7</modeler:form-reference-id>
+          <modeler:form-reference-name>Update Contract Form</modeler:form-reference-name>
+          <modeler:activiti-idm-initiator>true</modeler:activiti-idm-initiator>
+        </extensionElements>
+      </userTask>
+      <exclusiveGateway id="reassignTaskGw" default="sid-995730A7-9C8A-49A3-8763-AFC8323B9125"/>
+      <exclusiveGateway id="legalSubProcessJoin"/>
+      <endEvent id="legalSubProcessEnd">
+        <terminateEventDefinition/>
+      </endEvent>
+      <serviceTask id="setAttorneyParalegal" name="Set Attorney" activiti:delegateExpression="${activiti_executeDecisionDelegate}">
+        <extensionElements>
+          <activiti:field name="decisionTableReferenceKey">
+            <activiti:string><![CDATA[attorneyEmbed]]></activiti:string>
+          </activiti:field>
+          <modeler:decisiontable-reference modeler:decisiontablereferenceid="4" modeler:decisiontablereferencename="Select Attorney Embedded"/>
+        </extensionElements>
+      </serviceTask>
+      <sequenceFlow id="sid-0E01E0C9-AA7D-4AAD-B339-9BEA79C6DA16" sourceRef="legalSubProcessStart" targetRef="legalSubProcessSplit"/>
+      <sequenceFlow id="sid-87121D24-2896-479E-BFE8-B483835BDE09" sourceRef="legalSubProcessSplit" targetRef="legalReviewTask"/>
+      <sequenceFlow id="sid-F3C2E4C2-2E8E-4757-976B-003783D23B38" sourceRef="legalSubProcessSplit" targetRef="reassignTask"/>
+      <sequenceFlow id="sid-43E05ACF-C207-4E99-8A44-914A000F4D26" sourceRef="setAttorneyParalegal" targetRef="reassignTaskGw"/>
+      <sequenceFlow id="sid-83E8BCB3-350B-4737-AEE4-3672DBAF005B" sourceRef="legalSubProcessJoin" targetRef="legalSubProcessEnd"/>
+      <sequenceFlow id="sid-CC8506FB-29D4-4FA0-8DD1-D0A4A12C9C6D" sourceRef="legalReviewTask" targetRef="legalSubProcessJoin"/>
+      <sequenceFlow id="sid-995730A7-9C8A-49A3-8763-AFC8323B9125" sourceRef="reassignTaskGw" targetRef="legalSubProcessJoin"/>
+      <sequenceFlow id="flow3009977" sourceRef="reassignTaskGw" targetRef="reassignTask">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${caseOwner == previousCaseOwner}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow7837328" sourceRef="reassignTask" targetRef="setAttorneyParalegal"/>
+    </subProcess>
+    <sequenceFlow id="flow5" sourceRef="legalSubprocess" targetRef="legalReviewGw"/>
+    <exclusiveGateway id="legalReviewGw" name="Exclusive Review Gateway"/>
+    <subProcess id="paralegalSubProcess" name="Paralegal Subprocess">
+      <callActivity id="paralegalReview" name="Paralegal Review" calledElement="caseMgmtReview">
+        <extensionElements>
+          <activiti:in source="initiator" target="initiator"/>
+          <activiti:in sourceExpression="Paralegal Review" target="reviewName"/>
+          <activiti:in sourceExpression="paralegalReview" target="reviewKey"/>
+          <activiti:in sourceExpression="${true}" target="setCreatorWritable"/>
+        </extensionElements>
+      </callActivity>
+      <parallelGateway id="paralegalGW"/>
+      <userTask id="paralegalReviseTask" name="Update Contract" activiti:assignee="$INITIATOR" activiti:formKey="7">
+        <extensionElements>
+          <activiti:taskListener event="complete" class="org.activiti.engine.impl.bpmn.listener.ScriptTaskListener">
+            <activiti:field name="script">
+              <activiti:string><![CDATA[task.setVariableLocal('submitOutcomeAction', 'return');]]></activiti:string>
+            </activiti:field>
+            <activiti:field name="language">
+              <activiti:string><![CDATA[JavaScript]]></activiti:string>
+            </activiti:field>
+          </activiti:taskListener>
+          <modeler:allow-send-email>true</modeler:allow-send-email>
+          <modeler:form-reference-id>7</modeler:form-reference-id>
+          <modeler:form-reference-name>Update Contract Form</modeler:form-reference-name>
+          <modeler:activiti-idm-initiator>true</modeler:activiti-idm-initiator>
+        </extensionElements>
+      </userTask>
+      <startEvent id="paralegalStart"/>
+      <endEvent id="paralegalEnd">
+        <terminateEventDefinition/>
+      </endEvent>
+      <serviceTask id="sid-930F755E-CB06-4F47-9F50-D50490107F3D" name="Set Attorney" activiti:delegateExpression="${activiti_executeDecisionDelegate}">
+        <extensionElements>
+          <activiti:field name="decisionTableReferenceKey">
+            <activiti:string><![CDATA[attorneyEmbed]]></activiti:string>
+          </activiti:field>
+          <modeler:decisiontable-reference modeler:decisiontablereferenceid="4" modeler:decisiontablereferencename="Select Attorney Embedded"/>
+        </extensionElements>
+      </serviceTask>
+      <scriptTask id="paralegalSetCaseOwner" name="Set Owner" scriptFormat="groovy" activiti:autoStoreVariables="false">
+          // Do nothing
+      </scriptTask>
+      <sequenceFlow id="sid-FF9D7A65-FB0A-4CFF-8953-844139E65598" sourceRef="paralegalStart" targetRef="paralegalGW"/>
+      <sequenceFlow id="sid-DC0B6C9A-B4EA-47B9-AA51-91B5810B5498" sourceRef="paralegalGW" targetRef="paralegalReviseTask"/>
+      <sequenceFlow id="sid-1EDF667C-7970-48A4-92CC-F0E7F14B9F7D" sourceRef="paralegalReview" targetRef="paralegalEnd"/>
+      <sequenceFlow id="sid-350E909E-8354-4470-93C1-C648F385F5EA" sourceRef="paralegalReviseTask" targetRef="sid-930F755E-CB06-4F47-9F50-D50490107F3D"/>
+      <sequenceFlow id="sid-A438437B-C07E-4591-B7B0-F891C66678C7" sourceRef="paralegalSetCaseOwner" targetRef="paralegalReviseTask"/>
+      <sequenceFlow id="sid-A438437B-C07E-4591-B7B0-B591C79F0765" sourceRef="sid-930F755E-CB06-4F47-9F50-D50490107F3D" targetRef="paralegalSetCaseOwner"/>
+      <sequenceFlow id="sid-CD301997-6AC0-4870-8301-9FC1E1FDE61E" sourceRef="paralegalGW" targetRef="paralegalReview"/>
+    </subProcess>
+    <callActivity id="externalReview" name="External Review" calledElement="caseMgmtReview">
+      <extensionElements>
+        <activiti:in source="initiator" target="initiator"/>
+        <activiti:in sourceExpression="External Review" target="reviewName"/>
+        <activiti:in sourceExpression="externalReview" target="reviewKey"/>
+        <activiti:in sourceExpression="Negotiate" target="reviewFolderPath"/>
+        <activiti:in sourceExpression="${true}" target="external"/>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="deviate" name="Request Deviation" calledElement="caseMgmtReview">
+      <extensionElements>
+        <activiti:in source="initiator" target="initiator"/>
+        <activiti:in sourceExpression="Deviation" target="reviewName"/>
+        <activiti:in sourceExpression="internalReview" target="reviewKey"/>
+        <activiti:in sourceExpression="${true}" target="setCaseFolderPermissions"/>
+        <activiti:out source="outcome" target="deviationOutcome"/>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow13" sourceRef="deviate" targetRef="deviateGw"/>
+    <exclusiveGateway id="deviateGw" default="deviateFlow1"/>
+    <inclusiveGateway id="legalReviewJoin"/>
+    <callActivity id="sign" name="Upload Signed Copy" calledElement="caseMgmtReview">
+      <extensionElements>
+        <activiti:in source="initiator" target="initiator"/>
+        <activiti:in sourceExpression="Upload Signed Copy" target="reviewName"/>
+        <activiti:in sourceExpression="uploadSignedCopy" target="reviewKey"/>
+        <activiti:in sourceExpression="${true}" target="skipFinishTask"/>
+        <activiti:out source="outcome" target="signOutcome"/>
+        <activiti:out source="approvalCount" target="signCount"/>
+      </extensionElements>
+    </callActivity>
+    <exclusiveGateway id="signGw" default="signFlow1"/>
+    <sequenceFlow id="signFlow1" sourceRef="signGw" targetRef="legalReviewJoin"/>
+    <endEvent id="executed" name="Executed"/>
+    <endEvent id="cancelled" name="Cancelled"/>
+    <scriptTask id="setCaseStatusNew" name="Set Status New" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>execution.setVariable('status', 'New');</script>
+    </scriptTask>
+    <sequenceFlow id="flow0b" sourceRef="setCaseStatusNew" targetRef="newCaseTask"/>
+    <sequenceFlow id="flow0a" sourceRef="startevent" targetRef="setCaseStatusNew"/>
+    <!--
+    <serviceTask id="setAttorneyInitial" name="Set Attorney" activiti:delegateExpression="${activiti_executeDecisionDelegate}">
+      <extensionElements>
+        <activiti:field name="decisionTableReferenceKey">
+          <activiti:string><![CDATA[attorneyEmbed]]></activiti:string>
+        </activiti:field>
+        <modeler:decisiontable-reference modeler:decisiontablereferenceid="4" modeler:decisiontablereferencename="Select Attorney Embedded"/>
+      </extensionElements>
+    </serviceTask>
+    -->
+    <scriptTask id="setAttorneyInitial" name="setCaseOwner" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      execution.setVariable('caseOwner', 'julie.richards@acme.com');
+    </scriptTask>
+    <sequenceFlow id="flow2" sourceRef="setAttorneyInitial" targetRef="setOwner"/>
+    <scriptTask id="setOwner" name="setCaseOwner" scriptFormat="groovy" activiti:autoStoreVariables="false">
+        // Do nothing
+    </scriptTask>
+    <scriptTask id="setCaseStatusLegalReview" name="Set Status Legal Review" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>execution.setVariable('status', 'Legal Review');</script>
+    </scriptTask>
+    <sequenceFlow id="flow3" sourceRef="setOwner" targetRef="setCaseStatusLegalReview"/>
+    <scriptTask id="setCaseStatusCancelled" name="Set Status Cancelled" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>execution.setVariable('status', 'Cancelled');</script>
+    </scriptTask>
+    <sequenceFlow id="cancelFlow1" sourceRef="setCaseStatusCancelled" targetRef="cancelled"/>
+    <scriptTask id="setCaseStatusExecuted" name="Set Status Executed" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>execution.setVariable('status', 'Executed');</script>
+    </scriptTask>
+    <sequenceFlow id="flow16" sourceRef="setCaseStatusExecuted" targetRef="executed"/>
+    <sequenceFlow id="signFlow2" sourceRef="signGw" targetRef="setCaseStatusExecuted">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${signOutcome == 'complete'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow1a" sourceRef="newCaseTask" targetRef="newGw"/>
+    <sequenceFlow id="deviateFlow1" sourceRef="deviateGw" targetRef="legalReviewJoin"/>
+    <sequenceFlow id="flow15" sourceRef="sign" targetRef="signGw"/>
+    <sequenceFlow id="flow1c" sourceRef="newGw" targetRef="setCaseStatusExecuted">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:outcomeFormId="6" modeler:outcomeFormName="Case Details" modeler:rightOutcomeName="Bypass" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(form6outcome =='Bypass')}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow1b" sourceRef="newGw" targetRef="setAttorneyInitial">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:outcomeFormId="6" modeler:outcomeFormName="Case Details" modeler:rightOutcomeName="Send for Legal Review" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(form6outcome =='Send for Legal Review')}]]></conditionExpression>
+    </sequenceFlow>
+    <serviceTask id="setAttorneyLegalReview" name="Set Attorney" activiti:delegateExpression="${activiti_executeDecisionDelegate}">
+      <extensionElements>
+        <activiti:field name="decisionTableReferenceKey">
+          <activiti:string><![CDATA[attorneyEmbed]]></activiti:string>
+        </activiti:field>
+        <modeler:decisiontable-reference modeler:decisiontablereferenceid="4" modeler:decisiontablereferencename="Select Attorney Embedded"/>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow4a" sourceRef="setCaseStatusLegalReview" targetRef="setAttorneyLegalReview"/>
+    <scriptTask id="setPreviousAttorney" name="Set Previous Attorney" scriptFormat="groovy" activiti:autoStoreVariables="false">
+      <script>execution.setVariable('previousCaseOwner', execution.getVariable('caseOwner'));</script>
+    </scriptTask>
+    <sequenceFlow id="sid-53DEC25C-9329-4339-9762-752BD1F74FC2" sourceRef="setAttorneyLegalReview" targetRef="setPreviousAttorney"/>
+    <sequenceFlow id="sid-D890C8EA-D7A1-49CE-9738-B741B31EBD8C" sourceRef="setPreviousAttorney" targetRef="legalSubprocess"/>
+    <sequenceFlow id="flow8" sourceRef="legalReviewGw" targetRef="deviate">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:outcomeFormId="8" modeler:outcomeFormName="Legal Review" modeler:rightOutcomeName="Request Deviation" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(form8outcome =='Request Deviation')}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="legalReviewGw" targetRef="paralegalSubProcess">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:outcomeFormId="8" modeler:outcomeFormName="Legal Review" modeler:rightOutcomeName="Send to Paralegal" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(form8outcome =='Send to Paralegal')}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="legalReviewGw" targetRef="externalReview">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:outcomeFormId="8" modeler:outcomeFormName="Legal Review" modeler:rightOutcomeName="Send to Customer" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(form8outcome =='Send to Customer')}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="legalReviewGw" targetRef="sign">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:outcomeFormId="8" modeler:outcomeFormName="Legal Review" modeler:rightOutcomeName="Send for Signature" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(form8outcome =='Send for Signature')}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow10a" sourceRef="legalReviewGw" targetRef="setOwner">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:outcomeFormId="10" modeler:outcomeFormName="Update Contract Form" modeler:rightOutcomeName="Update Contract" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(form10outcome =='Update Contract')}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow14" sourceRef="legalReviewJoin" targetRef="setCaseStatusLegalReview"/>
+    <sequenceFlow id="flow11" sourceRef="paralegalSubProcess" targetRef="legalReviewJoin"/>
+    <sequenceFlow id="flow12" sourceRef="externalReview" targetRef="legalReviewJoin"/>
+    <sequenceFlow id="deviateFlow2" sourceRef="deviateGw" targetRef="setCaseStatusCancelled">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${execution.hasVariable('signCount') || empty signCount}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+</definitions>

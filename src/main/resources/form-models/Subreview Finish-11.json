@@ -1,0 +1,23 @@
+{
+  "referenceId": null,
+  "name": "Finish Sub Review",
+  "description": null,
+  "editorJson": {
+    "tabs": [],
+    "fields": [
+    ],
+    "outcomes": [
+      {
+        "id": "finish",
+        "name": "Finish Sub Review"
+      },
+      {
+        "id": "cancelContract",
+        "name": "Cancel Contract"
+      }
+    ],
+    "javascriptEvents": [],
+    "customFieldTemplates": {},
+    "gridsterForm": false
+  }
+}

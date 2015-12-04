@@ -1,0 +1,27 @@
+{
+  "referenceId": null,
+  "name": "Manage Sub Review",
+  "description": null,
+  "editorJson": {
+    "tabs": [],
+    "fields": [
+    ],
+    "outcomes": [
+      {
+        "id": "complete",
+        "name": "Complete Early"
+      },
+      {
+        "id": "abort",
+        "name": "Recall"
+      },
+      {
+        "id": "sendReminders",
+        "name": "Send Reminders"
+      }
+    ],
+    "javascriptEvents": [],
+    "customFieldTemplates": {},
+    "gridsterForm": false
+  }
+}
